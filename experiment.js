@@ -11,13 +11,7 @@ const jsPsych = initJsPsych({
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
-const save_data = {
-  type: jsPsychPipe,
-  action: "save",
-  experiment_id: "A7QNkE1XDpd9",
-  filename: filename,
-  data_string: ()=>jsPsych.data.get().csv()
-};
+
 
 // --- Latin square assignment ---
 // Randomly assign participant to one of 3 lists
@@ -282,6 +276,14 @@ const debrief = {
   choices: [" "]
 };
 
+const save_data = {
+  type: jsPsychPipe,
+  action: "save",
+  experiment_id: "A7QNkE1XDpd9",
+  filename: filename,
+  data_string: ()=>jsPsych.data.get().csv()
+};
+
 // --- Run experiment ---
 const timeline = [
   welcomeScreen,
@@ -291,7 +293,8 @@ const timeline = [
   ...firstBlock,
   restBreak,
   ...secondBlock,
-  debrief
+  debrief,
+  save_data
 ];
 
 jsPsych.run(timeline);
