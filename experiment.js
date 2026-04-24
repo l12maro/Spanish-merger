@@ -8,6 +8,17 @@ const jsPsych = initJsPsych({
   }
 });
 
+const subject_id = jsPsych.randomization.randomID(10);
+const filename = `${subject_id}.csv`;
+
+const save_data = {
+  type: jsPsychPipe,
+  action: "save",
+  experiment_id: "A7QNkE1XDpd9",
+  filename: filename,
+  data_string: ()=>jsPsych.data.get().csv()
+};
+
 // --- Latin square assignment ---
 // Randomly assign participant to one of 3 lists
 const listNumber = Math.floor(Math.random() * 3);
