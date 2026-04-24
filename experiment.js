@@ -288,12 +288,12 @@ const save_data = {
 const timeline = [
   welcomeScreen,
   instructionsScreen,
-  ...practiceTimeline,
-  endPractice,
-  ...firstBlock,
-  restBreak,
-  ...secondBlock,
-  debrief,
+  //...practiceTimeline,
+  //endPractice,
+  //...firstBlock,
+  //restBreak,
+  //...secondBlock,
+  //debrief,
   save_data
 ];
 
