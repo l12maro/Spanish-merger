@@ -1,7 +1,7 @@
 ---
 title: "Replication of Study 'The social meaning of a merger: The evaluation of an Andalusian Spanish consonant merger (ceceo)' by Regan (2022, Language in Society)"
 author: "Lorena Martin Rodriguez (lmaro@stanford.edu)"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
+date: ""
 format:
   html:
     toc: true
