@@ -224,12 +224,12 @@ const save_data = {
 // --- Run experiment ---
 const timeline = [
   welcomeScreen,
-  instructionsScreen,
-  ...firstBlock,
-  restBreak,
-  ...secondBlock,
-  debrief,
-  save_data
+//  instructionsScreen,
+//  ...firstBlock,
+//  restBreak,
+//  ...secondBlock,
+//  debrief,
+//  save_data
 ];
 
 jsPsych.run(timeline);
