@@ -86,7 +86,7 @@ const save_data = {
 // --- Run experiment ---
 const timeline = [
   welcomeScreen,
-//  instructionsScreen,
+  instructionsScreen,
 //  ...firstBlock,
 //  restBreak,
 //  ...secondBlock,
