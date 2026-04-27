@@ -24,68 +24,6 @@ const conditionNames = [
   "control"
 ];
 
-function getConditionForItem(itemIndex, list) {
-  return conditionNames[(itemIndex + list) % 3];
-}
-
-// --- Build evaluation question trial ---
-function buildQuestionTrial(question, itemId) {
-  if (!question) return [];
-  return [
-    {
-      type: jsPsychHtmlKeyboardResponse,
-      stimulus: `
-        <div class="comprehension-question">
-          <p>${question.text}</p>
-          <p style="font-size: 16px; color: #666;"><strong>F</strong> = Yes &nbsp;&nbsp;&nbsp; <strong>J</strong> = No</p>
-        </div>
-      `,
-      choices: ["f", "j"],
-      data: {
-        task: "comprehension",
-        item_id: itemId,
-        correct_answer: question.correct,
-        question_text: question.text
-      },
-      on_finish: function (data) {
-        const response = data.response;
-        const isYes = response === "f";
-        data.participant_answer = isYes ? "yes" : "no";
-        data.correct = data.participant_answer === data.correct_answer;
-      }
-    }
-  ];
-}
-
-// --- Build audio trial (if an audio file is provided in stimuli) ---
-function buildAudioTrial(trial) {
-  const conditionData = trial.conditionData || {};
-  let audioPath = null;
-  if (conditionData && conditionData.audio) {
-    audioPath = conditionData.audio;
-  } else if (typeof audioMap !== 'undefined' && audioMap[trial.itemId] && audioMap[trial.itemId][trial.condition]) {
-    audioPath = audioMap[trial.itemId][trial.condition];
-  }
-  if (!audioPath) return [];
-
-  return [
-    {
-      type: jsPsychAudioKeyboardResponse,
-      stimulus: audioPath,
-      choices: [" "],
-      prompt: '<p>Press <strong>Space</strong> to continue.</p>',
-      data: {
-        task: "listening",
-        item_id: trial.itemId,
-        condition: trial.condition || "filler",
-        audio: audioPath,
-        is_critical: trial.isCritical,
-        list: listNumber
-      }
-    }
-  ];
-}
-
 // --- Instructions ---
 const welcomeScreen = {
   type: jsPsychHtmlKeyboardResponse,
@@ -113,80 +51,6 @@ const instructionsScreen = {
   choices: [" "]
 };
 
-// --- Build experimental block ---
-// Assign conditions to critical items
-const experimentalTrials = [];
-
-for (let i = 0; i < criticalItems.length; i++) {
-  const item = criticalItems[i];
-  const condition = getConditionForItem(i, listNumber);
-  const conditionData = item.conditions[condition];
-
-  experimentalTrials.push({
-    itemId: item.id,
-    condition: condition,
-    isCritical: true,
-    conditionData: conditionData,
-    question: item.question,
-    segments: conditionData.segments
-  });
-}
-
-// Add filler items
-for (const item of fillerItems) {
-  experimentalTrials.push({
-    itemId: item.id,
-    condition: "filler",
-    isCritical: false,
-    conditionData: { segments: item.segments },
-    question: item.question,
-    segments: item.segments
-  });
-}
-
-// Shuffle the experimental trials
-function shuffle(array) {
-  const arr = [...array];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-const shuffledTrials = shuffle(experimentalTrials);
-
-// Split into two halves for rest break
-const halfPoint = Math.ceil(shuffledTrials.length / 2);
-const firstHalf = shuffledTrials.slice(0, halfPoint);
-const secondHalf = shuffledTrials.slice(halfPoint);
-
-function buildTrialBlock(trialList) {
-  const timeline = [];
-  for (const trial of trialList) {
-    // Prefer audio if available, otherwise fall back to segmented text
-    const audioTrials = buildAudioTrial(trial);
-    if (audioTrials.length > 0) {
-      timeline.push(...audioTrials);
-    } else {
-      const readingTrials = buildReadingTrials(
-        trial,
-        trial.conditionData,
-        trial.itemId,
-        trial.condition,
-        trial.isCritical
-      );
-      timeline.push(...readingTrials);
-    }
-    if (trial.question) {
-      timeline.push(...buildQuestionTrial(trial.question, trial.itemId));
-    }
-  }
-  return timeline;
-}
-
-const firstBlock = buildTrialBlock(firstHalf);
-
 const restBreak = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
@@ -198,8 +62,6 @@ const restBreak = {
   `,
   choices: [" "]
 };
-
-const secondBlock = buildTrialBlock(secondHalf);
 
 // --- Debrief ---
 const debrief = {
