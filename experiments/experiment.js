@@ -183,10 +183,10 @@ function shuffle(array) {
 
 const testAudio = {
     type: jsPsychAudioKeyboardResponse,
-    stimulus: '../data/ceceo-I.ogg',
-    choices: 'NO_KEYS',
-    prompt: "Listen to this audio as many times as needed",
-    response_ends_trial: false
+    stimulus: 'ceceo-I.ogg',
+    choices: ' ',
+    prompt: "Press space to continue after listening to the audio.",
+    response_ends_trial: true
 };
 
 // --- Debrief ---
