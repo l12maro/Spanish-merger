@@ -31,29 +31,29 @@ function getConditionForItem(itemIndex, list) {
 // Build a trial: play audio for the assigned condition and then show
 // all questions from `questionItems` (from stimuli.js). Returns an array
 // of jsPsych trial objects.
-function buildTrial(item, conditionData, itemId, condition) {
-  const trials = [];
-  const audio = conditionData.audio || conditionData;
+// function buildTrial(item, conditionData, itemId, condition) {
+  // const trials = [];
+  // const audio = conditionData.audio || conditionData;
 
 
   // Audio playback trial
-  if (audio) {
-    trials.push({
-      type: jsPsychAudioKeyboardResponse,
-      stimulus: audio,
-      choices: "NO_KEYS",
-      trial_ends_after_audio: false,
-      prompt: '<p>Escucha la grabación.</p>',
-      data: {
-        task: 'listening',
-        item_id: itemId,
-        condition: condition,
-        audio: audio,
-      }
-    });
-  }
-  return trials;
-}
+  // if (audio) {
+    // trials.push({
+      // type: jsPsychAudioKeyboardResponse,
+      // stimulus: audio,
+      // choices: "NO_KEYS",
+      // trial_ends_after_audio: false,
+      // prompt: '<p>Escucha la grabación.</p>',
+      // data: {
+        // task: 'listening',
+        // item_id: itemId,
+        // condition: condition,
+        // audio: audio,
+      // }
+    // });
+  // }
+  // return trials;
+// }
 
   // --- Build comprehension question trial ---
   //---function buildQuestionTrial() {
@@ -133,18 +133,18 @@ const restBreak = {
 // Assign conditions to critical items
 const experimentalTrials = [];
 
-for (let i = 0; i < criticalItems.length; i++) {
-  const item = criticalItems[i];
-  const condition = getConditionForItem(i, listNumber);
-  const conditionData = item.conditions[condition];
+// for (let i = 0; i < criticalItems.length; i++) {
+//   const item = criticalItems[i];
+//   const condition = getConditionForItem(i, listNumber);
+//   const conditionData = item.conditions[condition];
 
-  experimentalTrials.push({
-    itemId: item.id,
-    condition: condition,
-    conditionData: conditionData,
-    audio: conditionData.audio
-  });
-}
+//    experimentalTrials.push({
+    // itemId: item.id,
+    // condition: condition,
+    // conditionData: conditionData,
+    // audio: conditionData.audio
+  // });
+// }
 
 // Shuffle the experimental trials
 function shuffle(array) {
@@ -156,30 +156,38 @@ function shuffle(array) {
   return arr;
 }
 
-const shuffledTrials = shuffle(experimentalTrials);
+// const shuffledTrials = shuffle(experimentalTrials);
 
 // Split into two halves for rest break
-const halfPoint = Math.ceil(shuffledTrials.length / 2);
-const firstHalf = shuffledTrials.slice(0, halfPoint);
-const secondHalf = shuffledTrials.slice(halfPoint);
+// const halfPoint = Math.ceil(shuffledTrials.length / 2);
+// const firstHalf = shuffledTrials.slice(0, halfPoint);
+// const secondHalf = shuffledTrials.slice(halfPoint);
 
-function buildTrialBlock(trialList) {
-  const timeline = [];
-  for (const trial of trialList) {
-    const Trials = buildTrial(
-      trial,
-      trial.conditionData,
-      trial.itemId,
-      trial.condition,
-    );
-    timeline.push(...Trials);
+// function buildTrialBlock(trialList) {
+  // const timeline = [];
+  // for (const trial of trialList) {
+    // const Trials = buildTrial(
+      // trial,
+      // trial.conditionData,
+      // trial.itemId,
+      // trial.condition,
+    // );
+    // timeline.push(...Trials);
 //    timeline.push(...buildQuestionTrial());
-  }
-  return timeline;
-}
+  // }
+  // return timeline;
+// }
 
-const firstBlock = buildTrialBlock(firstHalf);
-const secondBlock = buildTrialBlock(secondHalf);
+// const firstBlock = buildTrialBlock(firstHalf);
+// const secondBlock = buildTrialBlock(secondHalf);
+
+const testAudio = {
+    type: jsPsychAudioKeyboardResponse,
+    stimulus: '../data/ceceo-I.ogg',
+    choices: 'NO_KEYS',
+    prompt: "Listen to this audio as many times as needed",
+    response_ends_trial: false
+};
 
 // --- Debrief ---
 const debrief = {
@@ -205,6 +213,7 @@ const save_data = {
 const timeline = [
   welcomeScreen,
   instructionsScreen,
+  testAudio, 
 //  ...firstBlock,
   restBreak,
 //  ...secondBlock,
