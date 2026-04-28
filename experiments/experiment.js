@@ -24,6 +24,72 @@ const conditionNames = [
   "control"
 ];
 
+function getConditionForItem(itemIndex, list) {
+  return conditionNames[(itemIndex + list) % conditionNames.length];
+}
+
+// Build a trial: play audio for the assigned condition and then show
+// all questions from `questionItems` (from stimuli.js). Returns an array
+// of jsPsych trial objects.
+function buildTrial(item, conditionData, itemId, condition) {
+  const trials = [];
+  const audio = conditionData.audio || conditionData;
+
+
+  // Audio playback trial
+  if (audio) {
+    trials.push({
+      type: jsPsychAudioKeyboardResponse,
+      stimulus: audio,
+      choices: "NO_KEYS",
+      trial_ends_after_audio: false,
+      prompt: '<p>Escucha la grabación.</p>',
+      data: {
+        task: 'listening',
+        item_id: itemId,
+        condition: condition,
+        audio: audio,
+      }
+    });
+  }
+
+  // --- Build comprehension question trial ---
+  function buildQuestionTrial() {
+    for (const q of questionItems) {
+      if (q.scales) {
+        const likertQs = q.scales.map((scale, i) => ({
+          prompt: scale.prompt || `${scale.left} — ${scale.right}`,
+          name: `${q.id}_s${i + 1}`,
+          labels: Array((scale.points || 5)).fill().map((_, idx) => String(idx + 1))
+        }));
+
+        trials.push({
+          type: jsPsychSurveyLikert,
+          questions: likertQs,
+          data: { task: 'likert', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+        });
+
+      } else if (q.options && Array.isArray(q.options)) {
+        trials.push({
+          type: jsPsychSurveyMultiChoice,
+          questions: [{ prompt: q.question, name: q.id, options: q.options, required: true }],
+          data: { task: 'choice', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+        });
+
+      } else if (q.type === 'text' || q.type === 'textarea') {
+        trials.push({
+          type: jsPsychSurveyText,
+          questions: [{ prompt: q.question, name: q.id, placeholder: q.placeholder || '' }],
+          data: { task: 'text', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+        });
+
+      } 
+    }
+  }
+
+  return trials;
+}
+
 // --- Instructions ---
 const welcomeScreen = {
   type: jsPsychHtmlKeyboardResponse,
@@ -32,7 +98,7 @@ const welcomeScreen = {
       <h2>Bienvenido</h2>
       <p>Algunos estudios recientes de la psicología social han demostrado que se puede inferir mucho sobre una persona sólo por escuchar su manera de hablar.</p>
       <p>Vas a escuchar unas grabaciones y responder un cuestionario basado en tus intuiciones.</p>
-      <p>Pulsa<strong>Espacio</strong> para continuar.</p>
+      <p>Pulsa <strong>Espacio</strong> para continuar.</p>
     </div>
   `,
   choices: [" "]
@@ -45,14 +111,14 @@ const instructionsScreen = {
       <h2>Las instrucciones</h2>
       <p>Vas a escuchar a <u>24 personas</u>. Cada grabación dura entre <u>2-5 segundos</u>. Escucha las grabaciones tantas veces como quieras. Debes responder a las preguntas después de cada grabación.</p>
       <p>Debes estar en un lugar sin ruido y ponerte <strong><u>los auriculares</u></strong> para poder escuchar bien cada grabación. El estudio <strong><u>durará 15 minutos</u></strong>. No lo pienses demasiado, debes usar tus primeras intuiciones.</p>
-      <p>Pulsa<strong>Espacio</strong> para comenzar.</p>
+      <p>Pulsa <strong>Espacio</strong> para comenzar.</p>
     </div>
   `,
   choices: [" "]
 };
 
 const restBreak = {
-  type: jsPsychHtmlKeyboardResponse,
+  type: jsPsychHtmlKeyboardResponse, 
   stimulus: `
     <div class="instructions">
       <h2>Rest Break</h2>
@@ -62,6 +128,58 @@ const restBreak = {
   `,
   choices: [" "]
 };
+
+// --- Build experimental block ---
+// Assign conditions to critical items
+const experimentalTrials = [];
+
+for (let i = 0; i < criticalItems.length; i++) {
+  const item = criticalItems[i];
+  const condition = getConditionForItem(i, listNumber);
+  const conditionData = item.conditions[condition];
+
+  experimentalTrials.push({
+    itemId: item.id,
+    condition: condition,
+    conditionData: conditionData,
+    audio: conditionData.audio
+  });
+}
+
+// Shuffle the experimental trials
+function shuffle(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+const shuffledTrials = shuffle(experimentalTrials);
+
+// Split into two halves for rest break
+const halfPoint = Math.ceil(shuffledTrials.length / 2);
+const firstHalf = shuffledTrials.slice(0, halfPoint);
+const secondHalf = shuffledTrials.slice(halfPoint);
+
+function buildTrialBlock(trialList) {
+  const timeline = [];
+  for (const trial of trialList) {
+    const Trials = buildTrial(
+      trial,
+      trial.conditionData,
+      trial.itemId,
+      trial.condition,
+    );
+    timeline.push(...Trials);
+    timeline.push(...buildQuestionTrial());
+  }
+  return timeline;
+}
+
+const firstBlock = buildTrialBlock(firstHalf);
+const secondBlock = buildTrialBlock(secondHalf);
 
 // --- Debrief ---
 const debrief = {
@@ -88,9 +206,9 @@ const timeline = [
   welcomeScreen,
   instructionsScreen,
 //  ...firstBlock,
-//  restBreak,
+  restBreak,
 //  ...secondBlock,
-//  debrief,
+  debrief,
 //  save_data
 ];
 
