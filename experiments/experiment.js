@@ -52,43 +52,43 @@ function buildTrial(item, conditionData, itemId, condition) {
       }
     });
   }
-
-  // --- Build comprehension question trial ---
-  function buildQuestionTrial() {
-    for (const q of questionItems) {
-      if (q.scales) {
-        const likertQs = q.scales.map((scale, i) => ({
-          prompt: scale.prompt || `${scale.left} — ${scale.right}`,
-          name: `${q.id}_s${i + 1}`,
-          labels: Array((scale.points || 5)).fill().map((_, idx) => String(idx + 1))
-        }));
-
-        trials.push({
-          type: jsPsychSurveyLikert,
-          questions: likertQs,
-          data: { task: 'likert', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-        });
-
-      } else if (q.options && Array.isArray(q.options)) {
-        trials.push({
-          type: jsPsychSurveyMultiChoice,
-          questions: [{ prompt: q.question, name: q.id, options: q.options, required: true }],
-          data: { task: 'choice', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-        });
-
-      } else if (q.type === 'text' || q.type === 'textarea') {
-        trials.push({
-          type: jsPsychSurveyText,
-          questions: [{ prompt: q.question, name: q.id, placeholder: q.placeholder || '' }],
-          data: { task: 'text', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-        });
-
-      } 
-    }
-  }
-
   return trials;
 }
+
+  // --- Build comprehension question trial ---
+  //---function buildQuestionTrial() {
+    // for (const q of questionItems) {
+      // if (q.scales) {
+        // const likertQs = q.scales.map((scale, i) => ({
+          // prompt: scale.prompt || `${scale.left} — ${scale.right}`,
+          // name: `${q.id}_s${i + 1}`,
+          // labels: Array((scale.points || 5)).fill().map((_, idx) => String(idx + 1))
+        // }));
+
+        // trials.push({
+          // type: jsPsychSurveyLikert,
+          // questions: likertQs,
+          // data: { task: 'likert', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+        // });
+
+      // } else if (q.options && Array.isArray(q.options)) {
+        // trials.push({
+          // type: jsPsychSurveyMultiChoice,
+          // questions: [{ prompt: q.question, name: q.id, options: q.options, required: true }],
+          // data: { task: 'choice', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+        // });
+
+      // } else if (q.type === 'text' || q.type === 'textarea') {
+        // trials.push({
+          // type: jsPsychSurveyText,
+          // questions: [{ prompt: q.question, name: q.id, placeholder: q.placeholder || '' }],
+          // data: { task: 'text', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+        // });
+
+      // } 
+    // }
+  // }
+
 
 // --- Instructions ---
 const welcomeScreen = {
