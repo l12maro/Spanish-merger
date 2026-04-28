@@ -173,7 +173,7 @@ function buildTrialBlock(trialList) {
       trial.condition,
     );
     timeline.push(...Trials);
-    timeline.push(...buildQuestionTrial());
+//    timeline.push(...buildQuestionTrial());
   }
   return timeline;
 }
