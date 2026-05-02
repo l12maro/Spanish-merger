@@ -42,10 +42,10 @@ function getConditionForItem(itemIndex, list) {
       type: jsPsychSurveyHtmlForm,
       stimulus: audio,
       html: `
-        <p>Listen to the audio below as many times as you like:</p>
+        <p>Escucha el audio tantas veces como quieras:</p>
         <audio controls>
           <source src="${audio}" type="audio/mpeg">
-          Your browser does not support the audio element.
+          Este elemento no es compatible con tu navegador.
         </audio> `,
       // choices: "NO_KEYS",
       // trial_ends_after_audio: false,
@@ -62,38 +62,42 @@ function getConditionForItem(itemIndex, list) {
  }
 
   // --- Build comprehension question trial ---
-  //---function buildQuestionTrial() {
-    // for (const q of questionItems) {
-      // if (q.scales) {
-        // const likertQs = q.scales.map((scale, i) => ({
-          // prompt: scale.prompt || `${scale.left} — ${scale.right}`,
-          // name: `${q.id}_s${i + 1}`,
-          // labels: Array((scale.points || 5)).fill().map((_, idx) => String(idx + 1))
-        // }));
+  function buildQuestionTrial(itemId, condition, audio) {
+    const trials = [];
 
-        // trials.push({
-          // type: jsPsychSurveyLikert,
-          // questions: likertQs,
-          // data: { task: 'likert', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-        // });
+     for (const q of questionItems) {
+       if (q.scales) {
+         const likertQs = q.scales.map((scale, i) => ({
+           prompt: scale.prompt || `${scale.left} — ${scale.right}`,
+           name: `${q.id}_s${i + 1}`,
+           labels: Array((scale.points || 5)).fill().map((_, idx) => String(idx + 1))
+         }));
 
-      // } else if (q.options && Array.isArray(q.options)) {
-        // trials.push({
-          // type: jsPsychSurveyMultiChoice,
-          // questions: [{ prompt: q.question, name: q.id, options: q.options, required: true }],
-          // data: { task: 'choice', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-        // });
+         trials.push({
+           type: jsPsychSurveyLikert,
+           questions: likertQs,
+           data: { task: 'likert', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+         });
 
-      // } else if (q.type === 'text' || q.type === 'textarea') {
-        // trials.push({
-          // type: jsPsychSurveyText,
-          // questions: [{ prompt: q.question, name: q.id, placeholder: q.placeholder || '' }],
-          // data: { task: 'text', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-        // });
+       } else if (q.options && Array.isArray(q.options)) {
+         trials.push({
+           type: jsPsychSurveyMultiChoice,
+           questions: [{ prompt: q.question, name: q.id, options: q.options, required: true }],
+           data: { task: 'choice', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+         });
 
-      // } 
-    // }
-  // }
+       } else if (q.type === 'text' || q.type === 'textarea') {
+         trials.push({
+           type: jsPsychSurveyText,
+           questions: [{ prompt: q.question, name: q.id, placeholder: q.placeholder || '' }],
+           data: { task: 'text', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+         });
+
+       } 
+     }
+            return trials;
+   }
+
 
 
 // --- Instructions ---
@@ -179,7 +183,7 @@ function shuffle(array) {
        trial.condition,
      );
      timeline.push(...Trials);
-//    timeline.push(...buildQuestionTrial());
+     timeline.push(...buildQuestionTrial());
    }
    return timeline;
  }
@@ -247,7 +251,7 @@ const timeline = [
 //  continueButton,
   ...firstBlock,
   restBreak,
-//  ...secondBlock,
+  ...secondBlock,
   debrief,
 //  save_data
 ];
