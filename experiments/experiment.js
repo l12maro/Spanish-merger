@@ -32,71 +32,193 @@ function getConditionForItem(itemIndex, list) {
 // all questions from `questionItems` (from stimuli.js). Returns an array
 // of jsPsych trial objects.
  function buildTrial(item, conditionData, itemId, condition) {
-   const trials = [];
    const audio = conditionData.audio || conditionData;
 
+   let questionHTML = "";
+
+  for (const q of questionItems) {
+
+    // LIKERT SCALES
+    if (q.scales) {
+
+      questionHTML += `<div class="question-block">`;
+      questionHTML += `<p><strong>${q.question || ""}</strong></p>`;
+
+      q.scales.forEach((scale, i) => {
+
+        questionHTML += `
+          <p>${scale.prompt || `${scale.left} — ${scale.right}`}</p>
+        `;
+
+        for (let j = 1; j <= (scale.points || 5); j++) {
+
+          questionHTML += `
+            <label>
+              <input
+                type="radio"
+                name="${q.id}_s${i + 1}"
+                value="${j}"
+                required
+              >
+              ${j}
+            </label>
+          `;
+        }
+
+        questionHTML += `<br><br>`;
+      });
+
+      questionHTML += `</div>`;
+    }
+
+    // MULTIPLE CHOICE
+    else if (q.options && Array.isArray(q.options)) {
+
+      questionHTML += `
+        <div class="question-block">
+          <p><strong>${q.question}</strong></p>
+      `;
+
+      q.options.forEach(option => {
+
+        questionHTML += `
+          <label>
+            <input
+              type="radio"
+              name="${q.id}"
+              value="${option}"
+              required
+            >
+            ${option}
+          </label><br>
+        `;
+      });
+
+      questionHTML += `</div><br>`;
+    }
+
+    // TEXT QUESTIONS
+    else if (q.type === 'text' || q.type === 'textarea') {
+
+      questionHTML += `
+        <div class="question-block">
+          <p><strong>${q.question}</strong></p>
+      `;
+
+      if (q.type === "textarea") {
+
+        questionHTML += `
+          <textarea
+            name="${q.id}"
+            rows="4"
+            cols="50"
+            placeholder="${q.placeholder || ''}"
+          ></textarea>
+        `;
+
+      } else {
+
+        questionHTML += `
+          <input
+            type="text"
+            name="${q.id}"
+            placeholder="${q.placeholder || ''}"
+          >
+        `;
+      }
+
+      questionHTML += `</div><br>`;
+    }
+  }
+
+  return [{
+    type: jsPsychSurveyHtmlForm,
+
+    html: `
+      <p>Escucha el audio tantas veces como quieras:</p>
+
+      <audio controls>
+        <source src="${audio}" type="audio/ogg">
+        Este elemento no es compatible con tu navegador.
+      </audio>
+
+      <hr>
+
+      ${questionHTML}
+    `,
+
+    button_label: "Continuar",
+
+    data: {
+      task: 'audio_questions',
+      item_id: itemId,
+      condition: condition,
+      audio: audio
+    }
+  }];
+}
 
   // Audio playback trial
-   if (audio) {
-     trials.push({
-      type: jsPsychSurveyHtmlForm,
-      stimulus: audio,
-      html: `
-        <p>Escucha el audio tantas veces como quieras:</p>
-        <audio controls>
-          <source src="${audio}" type="audio/mpeg">
-          Este elemento no es compatible con tu navegador.
-        </audio> `,
-      // choices: "NO_KEYS",
-      // trial_ends_after_audio: false,
-      // prompt: '<p>Escucha la grabación.</p>',
-      data: {
-         task: 'listening',
-         item_id: itemId,
-         condition: condition,
-         audio: audio,
-       }
-     });
-   }
-   return trials;
- }
+//    if (audio) {
+//      trials.push({
+//       type: jsPsychSurveyHtmlForm,
+//       stimulus: audio,
+//       html: `
+//         <p>Escucha el audio tantas veces como quieras:</p>
+//         <audio controls>
+//           <source src="${audio}" type="audio/mpeg">
+//           Este elemento no es compatible con tu navegador.
+//         </audio> `,
+//       // choices: "NO_KEYS",
+//       // trial_ends_after_audio: false,
+//       // prompt: '<p>Escucha la grabación.</p>',
+//       data: {
+//          task: 'listening',
+//          item_id: itemId,
+//          condition: condition,
+//          audio: audio,
+//        }
+//      });
+//    }
+//    return trials;
+//  }
 
-  // --- Build comprehension question trial ---
-  function buildQuestionTrial(itemId, condition, audio) {
-    const trials = [];
+//   // --- Build comprehension question trial ---
+//   function buildQuestionTrial(itemId, condition, audio) {
+//     const trials = [];
 
-     for (const q of questionItems) {
-       if (q.scales) {
-         const likertQs = q.scales.map((scale, i) => ({
-           prompt: scale.prompt || `${scale.left} — ${scale.right}`,
-           name: `${q.id}_s${i + 1}`,
-           labels: Array((scale.points || 5)).fill().map((_, idx) => String(idx + 1))
-         }));
+//      for (const q of questionItems) {
+//        if (q.scales) {
+//          const likertQs = q.scales.map((scale, i) => ({
+//            prompt: scale.prompt || `${scale.left} — ${scale.right}`,
+//            name: `${q.id}_s${i + 1}`,
+//            labels: Array((scale.points || 5)).fill().map((_, idx) => String(idx + 1))
+//          }));
 
-         trials.push({
-           type: jsPsychSurveyLikert,
-           questions: likertQs,
-           data: { task: 'likert', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-         });
+//          trials.push({
+//            type: jsPsychSurveyLikert,
+//            questions: likertQs,
+//            data: { task: 'likert', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+//          });
 
-       } else if (q.options && Array.isArray(q.options)) {
-         trials.push({
-           type: jsPsychSurveyMultiChoice,
-           questions: [{ prompt: q.question, name: q.id, options: q.options, required: true }],
-           data: { task: 'choice', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-         });
+//        } else if (q.options && Array.isArray(q.options)) {
+//          trials.push({
+//            type: jsPsychSurveyMultiChoice,
+//            questions: [{ prompt: q.question, name: q.id, options: q.options, required: true }],
+//            data: { task: 'choice', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+//          });
 
-       } else if (q.type === 'text' || q.type === 'textarea') {
-         trials.push({
-           type: jsPsychSurveyText,
-           questions: [{ prompt: q.question, name: q.id, placeholder: q.placeholder || '' }],
-           data: { task: 'text', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-         });
+//        } else if (q.type === 'text' || q.type === 'textarea') {
+//          trials.push({
+//            type: jsPsychSurveyText,
+//            questions: [{ prompt: q.question, name: q.id, placeholder: q.placeholder || '' }],
+//            data: { task: 'text', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
+//          });
 
-       } 
-     }
-            return trials;
-   }
+//        } 
+//      }
+//             return trials;
+//    }
 
 
 
@@ -183,7 +305,7 @@ function shuffle(array) {
        trial.condition,
      );
      timeline.push(...Trials);
-     timeline.push(...buildQuestionTrial());
+  //   timeline.push(...buildQuestionTrial());
    }
    return timeline;
  }
