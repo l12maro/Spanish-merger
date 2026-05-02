@@ -139,18 +139,18 @@ const restBreak = {
 // Assign conditions to critical items
 const experimentalTrials = [];
 
-// for (let i = 0; i < criticalItems.length; i++) {
-//   const item = criticalItems[i];
-//   const condition = getConditionForItem(i, listNumber);
-//   const conditionData = item.conditions[condition];
+ for (let i = 0; i < criticalItems.length; i++) {
+   const item = criticalItems[i];
+   const condition = getConditionForItem(i, listNumber);
+   const conditionData = item.conditions[condition];
 
-//    experimentalTrials.push({
-    // itemId: item.id,
-    // condition: condition,
-    // conditionData: conditionData,
-    // audio: conditionData.audio
-  // });
-// }
+    experimentalTrials.push({
+     itemId: item.id,
+     condition: condition,
+     conditionData: conditionData,
+     audio: conditionData.audio
+   });
+ }
 
 // Shuffle the experimental trials
 function shuffle(array) {
