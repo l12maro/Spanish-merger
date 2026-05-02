@@ -189,6 +189,30 @@ const testAudio = {
     response_ends_trial: true
 };
 
+
+// Step 1: Audio + questionnaire
+    const audioQuestionTrial = {
+      type: jsPsychSurveyHtmlForm,
+      html: `
+        <p>Listen to the audio below as many times as you like:</p>
+        <audio controls>
+          <source src="ceceo-I.ogg" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio> `
+    };
+
+    // Step 2: Continue button
+    const continueButton = {
+      type: jsPsychHtmlButtonResponse,
+      stimulus: "<p>Press continue to go to the next audio.</p>",
+      choices: ["Continue"]
+    };
+
+  //  trialTimeline.push(audioQuestionTrial);
+  //  trialTimeline.push(continueButton);
+  //});
+
+
 // --- Debrief ---
 const debrief = {
   type: jsPsychHtmlKeyboardResponse,
@@ -213,7 +237,8 @@ const save_data = {
 const timeline = [
   welcomeScreen,
   instructionsScreen,
-  testAudio, 
+  audioQuestionTrial,
+  continueButton,
 //  ...firstBlock,
   restBreak,
 //  ...secondBlock,
