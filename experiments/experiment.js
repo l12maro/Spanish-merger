@@ -191,15 +191,15 @@ const testAudio = {
 
 
 // Step 1: Audio + questionnaire
- //   const audioQuestionTrial = {
-   //   type: jsPsychSurveyHtmlForm,
-   //   html: `
-   //     <p>Listen to the audio below as many times as you like:</p>
-   //     <audio controls>
-   //       <source src="ceceo-I.ogg" type="audio/mpeg">
-   //       Your browser does not support the audio element.
-    //    </audio> `
-    //};
+    const audioQuestionTrial = {
+      type: jsPsychSurveyHtmlForm,
+      html: `
+        <p>Listen to the audio below as many times as you like:</p>
+        <audio controls>
+          <source src="ceceo-I.ogg" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio> `
+    };
 
     // Step 2: Continue button
     const continueButton = {
@@ -237,7 +237,7 @@ const save_data = {
 const timeline = [
   welcomeScreen,
   instructionsScreen,
-//  audioQuestionTrial,
+  audioQuestionTrial,
   continueButton,
 //  ...firstBlock,
   restBreak,
