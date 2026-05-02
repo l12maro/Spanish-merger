@@ -44,7 +44,7 @@ function getConditionForItem(itemIndex, list) {
       html: `
         <p>Listen to the audio below as many times as you like:</p>
         <audio controls>
-          <source src="${trial.audio}" type="audio/mpeg">
+          <source src="${audio}" type="audio/mpeg">
           Your browser does not support the audio element.
         </audio> `,
       // choices: "NO_KEYS",
