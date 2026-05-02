@@ -16,7 +16,8 @@ const criticalItems = [
     id: 1,
     conditions: {
       ceceo: { audio: "../data/ceceo-I.ogg" },
-      seseo: { audio: "../data/seseo-I.ogg" }
+      seseo: { audio: "../data/seseo-I.ogg" },
+      control: { audio: "../data/seseo-I.ogg" }
     },
     gender: "F"
   },
@@ -24,7 +25,8 @@ const criticalItems = [
     id: 2,
     conditions: {
       ceceo: { audio: "../data/ceceo-Isa.ogg" },
-      seseo: { audio: "../data/seseo-Isa.ogg" }
+      seseo: { audio: "../data/seseo-Isa.ogg" },
+      control: { audio: "../data/seseo-Isa.ogg" }
     },
     gender: "F"
   },
@@ -32,7 +34,8 @@ const criticalItems = [
     id: 3,
     conditions: {
       ceceo: { audio: "../data/ceceo-L.ogg" },
-      seseo: { audio: "../data/Seseo1-L.ogg" }
+      seseo: { audio: "../data/seseo1-L.ogg" },
+      control: { audio: "../data/seseo1-L.ogg" }
     },
     gender: "F"
   },
@@ -40,7 +43,8 @@ const criticalItems = [
     id: 4,
     conditions: {
       ceceo: { audio: "../data/ceceo-M.ogg" },
-      seseo: { audio: "../data/seseo-M.ogg" }
+      seseo: { audio: "../data/seseo-M.ogg" },
+      control: { audio: "../data/seseo-M.ogg" }
     },
     gender: "M"
   },
@@ -48,7 +52,8 @@ const criticalItems = [
     id: 5,
     conditions: {
       ceceo: { audio: "../data/ceceo-R.ogg" },
-      seseo: { audio: "../data/seseo-R.ogg" }
+      seseo: { audio: "../data/seseo-R.ogg" },
+      control: { audio: "../data/seseo-R.ogg" }
     },
     gender: "M"
   },
@@ -56,16 +61,17 @@ const criticalItems = [
     id: 6,
     conditions: {
       ceceo: { audio: "../data/ceceo-V.ogg" },
-      seseo: { audio: "../data/seseo-V.ogg" }
+      seseo: { audio: "../data/seseo-V.ogg" },
+      control: { audio: "../data/seseo-V.ogg" }
     },
     gender: "V"
   }
 ];
 
 // Insert control/filler items here (sentences without coronal fricatives)
-const fillerItems = [
-  { id: "f1", audio: X }
-]
+//const fillerItems = [
+//  { id: "f1", audio: X }
+//]
 
 // Questionnaire items presented after each trial.
 const questionItems = [
