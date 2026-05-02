@@ -31,29 +31,35 @@ function getConditionForItem(itemIndex, list) {
 // Build a trial: play audio for the assigned condition and then show
 // all questions from `questionItems` (from stimuli.js). Returns an array
 // of jsPsych trial objects.
-// function buildTrial(item, conditionData, itemId, condition) {
-  // const trials = [];
-  // const audio = conditionData.audio || conditionData;
+ function buildTrial(item, conditionData, itemId, condition) {
+   const trials = [];
+   const audio = conditionData.audio || conditionData;
 
 
   // Audio playback trial
-  // if (audio) {
-    // trials.push({
-      // type: jsPsychAudioKeyboardResponse,
-      // stimulus: audio,
+   if (audio) {
+     trials.push({
+      type: jsPsychSurveyHtmlForm,
+      stimulus: audio,
+      html: `
+        <p>Listen to the audio below as many times as you like:</p>
+        <audio controls>
+          <source src="${trial.audio}" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio> `,
       // choices: "NO_KEYS",
       // trial_ends_after_audio: false,
       // prompt: '<p>Escucha la grabación.</p>',
-      // data: {
-        // task: 'listening',
-        // item_id: itemId,
-        // condition: condition,
-        // audio: audio,
-      // }
-    // });
-  // }
-  // return trials;
-// }
+      data: {
+         task: 'listening',
+         item_id: itemId,
+         condition: condition,
+         audio: audio,
+       }
+     });
+   }
+   return trials;
+ }
 
   // --- Build comprehension question trial ---
   //---function buildQuestionTrial() {
@@ -156,30 +162,30 @@ function shuffle(array) {
   return arr;
 }
 
-// const shuffledTrials = shuffle(experimentalTrials);
+ const shuffledTrials = shuffle(experimentalTrials);
 
 // Split into two halves for rest break
-// const halfPoint = Math.ceil(shuffledTrials.length / 2);
-// const firstHalf = shuffledTrials.slice(0, halfPoint);
-// const secondHalf = shuffledTrials.slice(halfPoint);
+ const halfPoint = Math.ceil(shuffledTrials.length / 2);
+ const firstHalf = shuffledTrials.slice(0, halfPoint);
+ const secondHalf = shuffledTrials.slice(halfPoint);
 
-// function buildTrialBlock(trialList) {
-  // const timeline = [];
-  // for (const trial of trialList) {
-    // const Trials = buildTrial(
-      // trial,
-      // trial.conditionData,
-      // trial.itemId,
-      // trial.condition,
-    // );
-    // timeline.push(...Trials);
+ function buildTrialBlock(trialList) {
+   const timeline = [];
+   for (const trial of trialList) {
+     const Trials = buildTrial(
+       trial,
+       trial.conditionData,
+       trial.itemId,
+       trial.condition,
+     );
+     timeline.push(...Trials);
 //    timeline.push(...buildQuestionTrial());
-  // }
-  // return timeline;
-// }
+   }
+   return timeline;
+ }
 
-// const firstBlock = buildTrialBlock(firstHalf);
-// const secondBlock = buildTrialBlock(secondHalf);
+ const firstBlock = buildTrialBlock(firstHalf);
+ const secondBlock = buildTrialBlock(secondHalf);
 
 const testAudio = {
     type: jsPsychAudioKeyboardResponse,
@@ -237,9 +243,9 @@ const save_data = {
 const timeline = [
   welcomeScreen,
   instructionsScreen,
-  audioQuestionTrial,
-  continueButton,
-//  ...firstBlock,
+//  audioQuestionTrial,
+//  continueButton,
+  ...firstBlock,
   restBreak,
 //  ...secondBlock,
   debrief,
