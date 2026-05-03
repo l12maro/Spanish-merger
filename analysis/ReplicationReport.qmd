@@ -1,7 +1,7 @@
 ---
 title: "Replication of Study 'The social meaning of a merger: The evaluation of an Andalusian Spanish consonant merger (ceceo)' by Regan (2022, Language in Society)"
 author: "Lorena Martin Rodriguez (lmaro@stanford.edu)"
-date: ""
+date: "`r format(Sys.time(), '%B %d, %Y')`"
 format:
   html:
     toc: true
@@ -38,18 +38,17 @@ Upon consenting to the terms of the study, participants were told that they woul
 
 For each of these dependent measures a separate mixed effects linear regression model was created using the lmer function (Bates, Maechler, Bolker, & Walker Reference Bates, Maechler, Bolker and Walker2015) and lmerTest (Kuznetsova, Brockhoff, & Christensen Reference Kuznetsova, Brockhoff and Christensen2014) in R with two random intercepts of speaker and participant (listener) as well as the random slope of variant by participant. The independent variables tested in the various models included: variant (ceceo, distinción), speaker gender (male, female), listener gender (male, female), listener origin (Huelva capital, Lepe), listener education (1–5), listener age (eighteen to sixty-seven), and listener years lived away from Huelva/Lepe (zero to thirty). Listener years away serves as a limited proxy for geographic mobility. Listener education is a five-point scale based on educational levels: primary (1), secondary (2), bachillerato/professional formation (3), undergraduate degree (4), and graduate degree (5). All independent variables were tested in model construction with each social factor in interaction with variant. Three-way interactions between variant by listener origin by other social factors were tested to examine differences between communities. Within each model, non-statistically significant interactions with variant were removed from subsequent models. Estimated marginal means (Lenth, Singmann, Love, Buerkner, & Herve Reference Lenth, Singmann, Love, Buerkner and Herve2018) were used to conduct post-hoc analyses for interactions with more than two categorical levels.
 
-As perceived origin was a three-way categorical dependent variable (Huelva, Lepe, otro sitio), a separate multinomial logistic regression model was fitted to the listeners’ evaluations of speaker origin using the multinom function in the nnet package (Venables & Ripley Reference Venables and Ripley2002). Z-scores and p-values were calculated manually." (Reagan, 2022: 492), see modifications in section "Differences from original study"
+As perceived origin was a three-way categorical dependent variable (Huelva, Lepe, otro sitio), a separate multinomial logistic regression model was fitted to the listeners’ evaluations of speaker origin using the multinom function in the nnet package (Venables & Ripley Reference Venables and Ripley2002). Z-scores and p-values were calculated manually." (Reagan, 2022: 492), see modifications in section "Differences from original study".
 
 ### Differences from Original Study
 
-#### Differences in stimuli
-Stimuli will be recorded from six speakers instead of 12, balanced by gender. Speakers will not be from Huelva or Lepe, as in the original study, but from Almonte.
+#### Differences in Data Collection
 
-#### Differences in procedure
+Stimuli are recorded from eight speakers instead of 12, balanced by gender. Speakers are not be from Huelva or Lepe, as in the original study, but from Almonte. Participants may be any speaker of Peninsular Spanish. In this experiment, the guises are performed by the speakers, while the original experiment created them digitally by manipulating the fricative sounds. The control items are extracted from public data.
+
+#### Differences in Experiment
+
 Speakers will be asked for perceived origin regarding region (i.e. Huelva, Sevilla, otro sitio) rather than location.
-
-#### Differences in analysis
-None
 
 ### Methods Addendum (Post Data Collection)
 
