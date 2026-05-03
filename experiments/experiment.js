@@ -225,7 +225,7 @@ const experimentalTrials = [];
  for (let i = 0; i < criticalItems.length; i++) {
    const item = criticalItems[i];
   //  const condition = getConditionForItem(i, listNumber);
-  //  const conditionData = item.conditions[condition];
+    const conditionData = item.conditions[experimentalCondition];
 
     // ALWAYS add control trial
     experimentalTrials.push({
@@ -241,7 +241,7 @@ const experimentalTrials = [];
 
     experimentalTrials.push({
      itemId: item.id,
-     condition: experimentalCondition,
+     condition: experimentalConditions,
      conditionData: conditionData,
      audio: conditionData.audio
    });
