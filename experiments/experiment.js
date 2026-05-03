@@ -241,7 +241,7 @@ const experimentalTrials = [];
 
     experimentalTrials.push({
      itemId: item.id,
-     condition: experimentalConditions,
+     condition: experimentalCondition,
      conditionData: item.conditions[experimentalCondition],
      audio: item.conditions[experimentalCondition].audio
    });
