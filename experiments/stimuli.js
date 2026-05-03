@@ -34,8 +34,8 @@ const criticalItems = [
     id: 3,
     conditions: {
       ceceo: { audio: "../data/ceceo-L.ogg" },
-      seseo: { audio: "../data/seseo1-L.ogg" },
-      control: { audio: "../data/seseo1-L.ogg" }
+      seseo: { audio: "../data/seseo-L.ogg" },
+      control: { audio: "../data/seseo-L.ogg" }
     },
     gender: "F"
   },

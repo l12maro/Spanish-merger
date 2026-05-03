@@ -18,14 +18,34 @@ const filename = `${subject_id}.csv`;
 const listNumber = Math.floor(Math.random() * 2);
 
 // Assign conditions to items using Latin square
-const conditionNames = [
-  "ceceo",
-  "seseo",
-  "control"
-];
+// const conditionNames = [
+//   "ceceo",
+//   "seseo",
+//   "control"
+// ];
 
-function getConditionForItem(itemIndex, list) {
-  return conditionNames[(itemIndex + list) % conditionNames.length];
+// function getConditionForItem(itemIndex, list) {
+//   return conditionNames[(itemIndex + list) % conditionNames.length];
+// }
+
+function getExperimentalCondition(itemIndex, list) {
+
+  // Version 0:
+  // even items = ceceo
+  // odd items = seseo
+
+  if (list === 0) {
+    return itemIndex % 2 === 0
+      ? "ceceo"
+      : "seseo";
+  }
+
+  // Version 1:
+  // reversed assignment
+
+  return itemIndex % 2 === 0
+    ? "seseo"
+    : "ceceo";
 }
 
 // Build a trial: play audio for the assigned condition and then show
@@ -135,7 +155,7 @@ function getConditionForItem(itemIndex, list) {
     type: jsPsychSurveyHtmlForm,
 
     html: `
-      <p>Escucha el audio tantas veces como quieras:</p>
+      <p>Escucha el audio tantas veces como quieras y responde a las siguientes preguntas</p>
 
       <audio controls>
         <source src="${audio}" type="audio/ogg">
@@ -157,69 +177,6 @@ function getConditionForItem(itemIndex, list) {
     }
   }];
 }
-
-  // Audio playback trial
-//    if (audio) {
-//      trials.push({
-//       type: jsPsychSurveyHtmlForm,
-//       stimulus: audio,
-//       html: `
-//         <p>Escucha el audio tantas veces como quieras:</p>
-//         <audio controls>
-//           <source src="${audio}" type="audio/mpeg">
-//           Este elemento no es compatible con tu navegador.
-//         </audio> `,
-//       // choices: "NO_KEYS",
-//       // trial_ends_after_audio: false,
-//       // prompt: '<p>Escucha la grabación.</p>',
-//       data: {
-//          task: 'listening',
-//          item_id: itemId,
-//          condition: condition,
-//          audio: audio,
-//        }
-//      });
-//    }
-//    return trials;
-//  }
-
-//   // --- Build comprehension question trial ---
-//   function buildQuestionTrial(itemId, condition, audio) {
-//     const trials = [];
-
-//      for (const q of questionItems) {
-//        if (q.scales) {
-//          const likertQs = q.scales.map((scale, i) => ({
-//            prompt: scale.prompt || `${scale.left} — ${scale.right}`,
-//            name: `${q.id}_s${i + 1}`,
-//            labels: Array((scale.points || 5)).fill().map((_, idx) => String(idx + 1))
-//          }));
-
-//          trials.push({
-//            type: jsPsychSurveyLikert,
-//            questions: likertQs,
-//            data: { task: 'likert', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-//          });
-
-//        } else if (q.options && Array.isArray(q.options)) {
-//          trials.push({
-//            type: jsPsychSurveyMultiChoice,
-//            questions: [{ prompt: q.question, name: q.id, options: q.options, required: true }],
-//            data: { task: 'choice', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-//          });
-
-//        } else if (q.type === 'text' || q.type === 'textarea') {
-//          trials.push({
-//            type: jsPsychSurveyText,
-//            questions: [{ prompt: q.question, name: q.id, placeholder: q.placeholder || '' }],
-//            data: { task: 'text', item_id: criticalItem.id, question_id: q.id, condition: assignedCondition, audio: audioPath }
-//          });
-
-//        } 
-//      }
-//             return trials;
-//    }
-
 
 
 // --- Instructions ---
@@ -267,8 +224,20 @@ const experimentalTrials = [];
 
  for (let i = 0; i < criticalItems.length; i++) {
    const item = criticalItems[i];
-   const condition = getConditionForItem(i, listNumber);
-   const conditionData = item.conditions[condition];
+  //  const condition = getConditionForItem(i, listNumber);
+  //  const conditionData = item.conditions[condition];
+
+    // ALWAYS add control trial
+    experimentalTrials.push({
+      itemId: item.id,
+      condition: "control",
+      conditionData: item.conditions.control,
+      audio: item.conditions.control.audio
+    });
+
+    // Add ONE experimental guise
+    const experimentalCondition =
+      getExperimentalCondition(i, listNumber);
 
     experimentalTrials.push({
      itemId: item.id,
@@ -305,7 +274,6 @@ function shuffle(array) {
        trial.condition,
      );
      timeline.push(...Trials);
-  //   timeline.push(...buildQuestionTrial());
    }
    return timeline;
  }
