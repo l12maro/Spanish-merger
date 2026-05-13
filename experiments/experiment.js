@@ -174,7 +174,7 @@ function getExperimentalCondition(itemIndex, list) {
       item_id: itemId,
       condition: condition,
       audio: audio
-    }
+    },
 
     on_load: function () {
 
