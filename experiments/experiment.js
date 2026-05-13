@@ -179,8 +179,10 @@ function getExperimentalCondition(itemIndex, list) {
     on_load: function () {
 
       const audioEl = document.getElementById("trial-audio");
-      const continueBtn = document.querySelector("button");
-
+      // Correct button selector for jsPsych
+      const continueBtn = document.getElementById(
+        "jspsych-survey-html-form-next"
+      );
       // Disable button initially
       continueBtn.disabled = true;
 
