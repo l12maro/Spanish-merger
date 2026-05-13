@@ -248,9 +248,9 @@ const experimentalTrials = [];
      if (i > 3) {
 // Pick a random valid filler
       const randomIndex =
-      Math.floor(Math.random() * validFillers.length);
+      Math.floor(Math.random() * remainingFillers.length);
 
-      const selectedFiller = validFillers[randomIndex];
+      const selectedFiller = remainingFillers[randomIndex];
 
       experimentalTrials.push({
       itemId: selectedFiller.id,
