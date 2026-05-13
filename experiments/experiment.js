@@ -2,6 +2,8 @@
 // Matched-guise experiment
 // Regan (2022)
 
+const { fillerItems } = require("./stimuli");
+
 const jsPsych = initJsPsych({
   on_finish: function () {
     jsPsych.data.displayData("csv");
@@ -198,7 +200,7 @@ const instructionsScreen = {
   stimulus: `
     <div class="instructions">
       <h2>Las instrucciones</h2>
-      <p>Vas a escuchar a <u>24 personas</u>. Cada grabación dura entre <u>2-5 segundos</u>. Escucha las grabaciones tantas veces como quieras. Debes responder a las preguntas después de cada grabación.</p>
+      <p>Vas a escuchar a <u>10 personas</u>. Cada grabación dura entre <u>2-5 segundos</u>. Escucha las grabaciones tantas veces como quieras. Debes responder a las preguntas después de cada grabación.</p>
       <p>Debes estar en un lugar sin ruido y ponerte <strong><u>los auriculares</u></strong> para poder escuchar bien cada grabación. El estudio <strong><u>durará 15 minutos</u></strong>. No lo pienses demasiado, debes usar tus primeras intuiciones.</p>
       <p>Pulsa <strong>Espacio</strong> para comenzar.</p>
     </div>
@@ -220,20 +222,16 @@ const restBreak = {
 
 // --- Build experimental block ---
 // Assign conditions to critical items
+// Copy fillers so we can remove used ones
+let remainingFillers = [...fillerItems];
+
 const experimentalTrials = [];
 
  for (let i = 0; i < criticalItems.length; i++) {
    const item = criticalItems[i];
+   const filler = fillerItems[i % fillerItems.length]; // Cycle through fillers if fewer than critical items
   //  const condition = getConditionForItem(i, listNumber);
   //  const conditionData = item.conditions[condition];
-
-    // ALWAYS add control trial
-    experimentalTrials.push({
-      itemId: item.id,
-      condition: "control",
-      conditionData: item.conditions.control,
-      audio: item.conditions.control.audio
-    });
 
     // Add ONE experimental guise
     const experimentalCondition =
@@ -245,7 +243,27 @@ const experimentalTrials = [];
      conditionData: item.conditions[experimentalCondition],
      audio: item.conditions[experimentalCondition].audio
    });
- }
+
+     // Add filler trial
+     if (i > 3) {
+// Pick a random valid filler
+      const randomIndex =
+      Math.floor(Math.random() * validFillers.length);
+
+      const selectedFiller = validFillers[randomIndex];
+
+      experimentalTrials.push({
+      itemId: selectedFiller.id,
+      condition: "filler",
+      audio: selectedFiller.audio
+    });
+
+    // Remove used filler so it cannot repeat
+    remainingFillers = remainingFillers.filter(
+      filler => filler.id !== selectedFiller.id
+    );
+    };
+  }
 
 // Shuffle the experimental trials
 function shuffle(array) {
@@ -281,36 +299,7 @@ function shuffle(array) {
  const firstBlock = buildTrialBlock(firstHalf);
  const secondBlock = buildTrialBlock(secondHalf);
 
-const testAudio = {
-    type: jsPsychAudioKeyboardResponse,
-    stimulus: 'ceceo-I.ogg',
-    choices: ' ',
-    prompt: "Press space to continue after listening to the audio.",
-    response_ends_trial: true
-};
 
-
-// Step 1: Audio + questionnaire
-    const audioQuestionTrial = {
-      type: jsPsychSurveyHtmlForm,
-      html: `
-        <p>Listen to the audio below as many times as you like:</p>
-        <audio controls>
-          <source src="ceceo-I.ogg" type="audio/mpeg">
-          Your browser does not support the audio element.
-        </audio> `
-    };
-
-    // Step 2: Continue button
-    const continueButton = {
-      type: jsPsychHtmlButtonResponse,
-      stimulus: "<p>Press continue to go to the next audio.</p>",
-      choices: ["Continue"]
-    };
-
-  //  trialTimeline.push(audioQuestionTrial);
-  //  trialTimeline.push(continueButton);
-  //});
 
 
 // --- Debrief ---
@@ -318,9 +307,9 @@ const debrief = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
       <div class="instructions">
-        <h2>Experiment Complete</h2>
-        <p>Thank you for your participation!</p>
-        <p>Press <strong>Space</strong> to see your data.</p>
+        <h2>Experimento Completado</h2>
+        <p>Gracias por tu participación!</p>
+        <p>Presiona <strong>Espacio</strong> para ver tus datos.</p>
       </div>
     `
 };
@@ -337,13 +326,11 @@ const save_data = {
 const timeline = [
   welcomeScreen,
   instructionsScreen,
-//  audioQuestionTrial,
-//  continueButton,
   ...firstBlock,
-  restBreak,
+//  restBreak,
   ...secondBlock,
   debrief,
-//  save_data
+  save_data
 ];
 
 jsPsych.run(timeline);

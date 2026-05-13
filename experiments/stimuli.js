@@ -17,7 +17,6 @@ const criticalItems = [
     conditions: {
       ceceo: { audio: "../data/ceceo-I.ogg" },
       seseo: { audio: "../data/seseo-I.ogg" },
-      control: { audio: "../data/seseo-I.ogg" }
     },
     gender: "F"
   },
@@ -26,7 +25,6 @@ const criticalItems = [
     conditions: {
       ceceo: { audio: "../data/ceceo-Isa.ogg" },
       seseo: { audio: "../data/seseo-Isa.ogg" },
-      control: { audio: "../data/seseo-Isa.ogg" }
     },
     gender: "F"
   },
@@ -35,7 +33,6 @@ const criticalItems = [
     conditions: {
       ceceo: { audio: "../data/ceceo-L.ogg" },
       seseo: { audio: "../data/seseo-L.ogg" },
-      control: { audio: "../data/seseo-L.ogg" }
     },
     gender: "F"
   },
@@ -44,7 +41,6 @@ const criticalItems = [
     conditions: {
       ceceo: { audio: "../data/ceceo-M.ogg" },
       seseo: { audio: "../data/seseo-M.ogg" },
-      control: { audio: "../data/seseo-M.ogg" }
     },
     gender: "M"
   },
@@ -53,7 +49,6 @@ const criticalItems = [
     conditions: {
       ceceo: { audio: "../data/ceceo-R.ogg" },
       seseo: { audio: "../data/seseo-R.ogg" },
-      control: { audio: "../data/seseo-R.ogg" }
     },
     gender: "M"
   },
@@ -62,16 +57,18 @@ const criticalItems = [
     conditions: {
       ceceo: { audio: "../data/ceceo-V.ogg" },
       seseo: { audio: "../data/seseo-V.ogg" },
-      control: { audio: "../data/seseo-V.ogg" }
     },
     gender: "V"
   }
 ];
 
 // Insert control/filler items here (sentences without coronal fricatives)
-//const fillerItems = [
-//  { id: "f1", audio: X }
-//]
+const fillerItems = [
+  { id: "1", audio: "../data/filler-D.ogg" },
+  { id: "2", audio: "../data/filler-I.ogg" },
+  { id: "3", audio: "../data/filler-L.ogg" },
+  { id: "4", audio: "../data/filler-M.ogg" },
+]
 
 // Questionnaire items presented after each trial.
 const questionItems = [
