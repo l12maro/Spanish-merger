@@ -2,7 +2,7 @@
 // Matched-guise experiment
 // Regan (2022)
 
-const { fillerItems } = require("./stimuli");
+//const { fillerItems } = require("./stimuli");
 
 const jsPsych = initJsPsych({
   on_finish: function () {
