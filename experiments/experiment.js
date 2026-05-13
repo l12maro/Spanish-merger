@@ -175,7 +175,61 @@ function getExperimentalCondition(itemIndex, list) {
       condition: condition,
       audio: audio
     }
+
+    on_load: function () {
+
+      const audioEl = document.getElementById("trial-audio");
+      const continueBtn = document.querySelector("button");
+
+      // Disable button initially
+      continueBtn.disabled = true;
+
+      let audioFinished = false;
+
+      // Check whether all required fields are answered
+      function allQuestionsAnswered() {
+
+        const form = document.querySelector("form");
+
+        // Check required radio groups
+        const requiredRadios = [...form.querySelectorAll("input[type='radio'][required]")];
+        const radioNames = [...new Set(requiredRadios.map(r => r.name))];
+
+        const radiosComplete = radioNames.every(name => {
+          return form.querySelector(`input[name="${name}"]:checked`);
+        });
+
+        // Check required textareas and text inputs
+        const requiredText = [...form.querySelectorAll("textarea[required], input[type='text'][required]")];
+
+        const textComplete = requiredText.every(el => {
+          return el.value.trim() !== "";
+        });
+          return radiosComplete && textComplete;
+      }
+
+      // Enable button only if BOTH conditions are met
+      function updateButtonState() {
+
+        if (audioFinished && allQuestionsAnswered()) {
+          continueBtn.disabled = false;
+        } else {
+          continueBtn.disabled = true;
+        }
+      }
+
+      // Audio must finish
+      audioEl.addEventListener("ended", () => {
+        audioFinished = true;
+        updateButtonState();
+      });
+
+      // Listen for answers changing
+      document.querySelector("form").addEventListener("input", updateButtonState);
+      document.querySelector("form").addEventListener("change", updateButtonState);
+    }
   }];
+  
 }
 
 
