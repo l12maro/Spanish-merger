@@ -188,37 +188,47 @@ function getExperimentalCondition(itemIndex, list) {
 
       let audioFinished = false;
 
-      // Check whether all required fields are answered
-      function allQuestionsAnswered() {
+      // // Check whether all required fields are answered
+      // function allQuestionsAnswered() {
 
-        const form = document.querySelector("form");
+      //   const form = document.querySelector("form");
 
-        // Check required radio groups
-        const requiredRadios = [...form.querySelectorAll("input[type='radio'][required]")];
-        const radioNames = [...new Set(requiredRadios.map(r => r.name))];
+      //   // Check required radio groups
+      //   const requiredRadios = [...form.querySelectorAll("input[type='radio'][required]")];
+      //   const radioNames = [...new Set(requiredRadios.map(r => r.name))];
 
-        const radiosComplete = radioNames.every(name => {
-          return form.querySelector(`input[name="${name}"]:checked`);
-        });
+      //   const radiosComplete = radioNames.every(name => {
+      //     return form.querySelector(`input[name="${name}"]:checked`);
+      //   });
 
-        // Check required textareas and text inputs
-        const requiredText = [...form.querySelectorAll("textarea[required], input[type='text'][required]")];
+      //   // Check required textareas and text inputs
+      //   const requiredText = [...form.querySelectorAll("textarea[required], input[type='text'][required]")];
 
-        const textComplete = requiredText.every(el => {
-          return el.value.trim() !== "";
-        });
-          return radiosComplete && textComplete;
-      }
+      //   const textComplete = requiredText.every(el => {
+      //     return el.value.trim() !== "";
+      //   });
+      //     return radiosComplete && textComplete;
+      // }
+
+      // // Enable button only if BOTH conditions are met
+      // function updateButtonState() {
+
+      //   if (audioFinished && allQuestionsAnswered()) {
+      //     continueBtn.disabled = false;
+      //   } else {
+      //     continueBtn.disabled = true;
+      //   }
+      // }
 
       // Enable button only if BOTH conditions are met
-      function updateButtonState() {
-
-        if (audioFinished && allQuestionsAnswered()) {
-          continueBtn.disabled = false;
-        } else {
-          continueBtn.disabled = true;
-        }
-      }
+       function updateButtonState() {
+          if (audioFinished) {
+              continueBtn.disabled = false;
+            } else {
+              continueBtn.disabled = true;
+            }
+          }
+          
 
       // Audio must finish
       audioEl.addEventListener("ended", () => {
@@ -226,9 +236,9 @@ function getExperimentalCondition(itemIndex, list) {
         updateButtonState();
       });
 
-      // Listen for answers changing
-      document.querySelector("form").addEventListener("input", updateButtonState);
-      document.querySelector("form").addEventListener("change", updateButtonState);
+      // // Listen for answers changing
+      // document.querySelector("form").addEventListener("input", updateButtonState);
+      // document.querySelector("form").addEventListener("change", updateButtonState);
     }
   }];
   
