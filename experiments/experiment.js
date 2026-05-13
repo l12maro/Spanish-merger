@@ -53,8 +53,8 @@ function getExperimentalCondition(itemIndex, list) {
 // Build a trial: play audio for the assigned condition and then show
 // all questions from `questionItems` (from stimuli.js). Returns an array
 // of jsPsych trial objects.
- function buildTrial(item, audio, conditionData, itemId, condition) {
-   const audio = audio;
+ function buildTrial(item, sound, conditionData, itemId, condition) {
+   const audio = sound;
 
    let questionHTML = "";
 
@@ -241,7 +241,7 @@ const experimentalTrials = [];
      itemId: item.id,
      condition: experimentalCondition,
      conditionData: item.conditions[experimentalCondition],
-     audio: item.conditions[experimentalCondition].audio
+     sound: item.conditions[experimentalCondition].audio
    });
 
      // Add filler trial
@@ -256,7 +256,7 @@ const experimentalTrials = [];
       itemId: selectedFiller.id,
       condition: "filler",
       conditionData: null,
-      audio: selectedFiller.audio
+      sound: selectedFiller.audio
     });
 
     // Remove used filler so it cannot repeat
@@ -288,7 +288,7 @@ function shuffle(array) {
    for (const trial of trialList) {
      const Trials = buildTrial(
        trial,
-       trial.audio,
+       trial.sound,
        trial.conditionData,
        trial.itemId,
        trial.condition,
