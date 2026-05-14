@@ -6,7 +6,8 @@
 
 const jsPsych = initJsPsych({
   on_finish: function () {
-    jsPsych.data.displayData("csv");
+    //jsPsych.data.displayData("csv");
+    window.location.href = 'finish.html'; // JJ: Redirect to a finish page after the experiment is completed
   }
 });
 
@@ -206,20 +207,34 @@ function getExperimentalCondition(itemIndex, list) {
     },
 
     on_load: function () {
+      // JJ: Disable all form inputs and continue button initially
       const audioEl = document.querySelector("audio");
-      // Correct button selector for jsPsych
-      const continueBtn = document.getElementById(
-        "jspsych-survey-html-form-next"
-      );
-      // Disable button initially
+      const continueBtn = document.getElementById("jspsych-survey-html-form-next");
+      const form = document.querySelector("form");
+      if (form) {
+        const inputs = form.querySelectorAll("input, textarea, select, button");
+        inputs.forEach(input => {
+          input.disabled = true;
+        });
+      }
       continueBtn.disabled = true;
 
+      // JJ: Enable all inputs and continue button after audio finishes for the first time
+      let audioPlayed = false;
       audioEl.addEventListener("ended", function () {
-        continueBtn.disabled = false;
+        if (!audioPlayed) {
+          audioPlayed = true;
+          if (form) {
+            const inputs = form.querySelectorAll("input, textarea, select, button");
+            inputs.forEach(input => {
+              input.disabled = false;
+            });
+          }
+          continueBtn.disabled = false;
+        }
       });
     }
   }];
-  
 }
 
 
