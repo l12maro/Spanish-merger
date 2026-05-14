@@ -58,7 +58,7 @@ const criticalItems = [
       ceceo: { audio: "../data/ceceo-V.ogg" },
       seseo: { audio: "../data/seseo-V.ogg" },
     },
-    gender: "V"
+    gender: "M"
   }
 ];
 
@@ -109,7 +109,7 @@ const questionItems = [
       "30-39",
       "40-49",
       "50-59",
-      "> 60"
+      "≥ 60"
     ]
   },
   {
