@@ -7,7 +7,8 @@
 const jsPsych = initJsPsych({
   on_finish: function () {
     //jsPsych.data.displayData("csv");
-    window.location.href = 'finish.html'; // JJ: Redirect to a finish page after the experiment is completed
+    window.location.href =
+      "https://app.prolific.com/submissions/complete?cc=C188Y4QN"; // Redirect to Prolific completion URL
   }
 });
 
