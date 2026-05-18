@@ -358,7 +358,26 @@ function shuffle(array) {
  const firstBlock = buildTrialBlock(firstHalf);
  const secondBlock = buildTrialBlock(secondHalf);
 
-
+// Ask for Prolific ID
+  const prolific_id_trial = {
+    type: jsPsychSurveyText,
+    questions: [
+      {
+        prompt: "Por favor, ingresa tu ID de Prolific:",
+        name: "prolific_id",
+        required: true,
+        placeholder: "e.g., 64f1a2b3c4d5e6f7g8h9"
+      }
+    ],
+    button_label: "Continue",
+    on_finish: function(data) {
+      // Save Prolific ID as a global property
+      const response = JSON.parse(data.responses);
+      jsPsych.data.addProperties({
+        prolific_id: response.prolific_id
+      });
+    }
+  };
 
 
 // --- Debrief ---
@@ -384,6 +403,7 @@ const save_data = {
 // --- Run experiment ---
 const timeline = [
   consent_trial,
+  prolific_id_trial,
   welcomeScreen,
   instructionsScreen,
   ...firstBlock,
