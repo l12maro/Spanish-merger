@@ -372,7 +372,7 @@ function shuffle(array) {
     button_label: "Continue",
     on_finish: function(data) {
       // Save Prolific ID as a global property
-      const response = JSON.parse(data.responses);
+      const response = data.response;
       jsPsych.data.addProperties({
         prolific_id: response.prolific_id
       });
