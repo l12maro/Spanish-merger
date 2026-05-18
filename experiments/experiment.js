@@ -302,9 +302,9 @@ const experimentalTrials = [];
      audio: item.conditions[experimentalCondition].audio
    });
 
-     // Add filler trial
+     // Add fillers trial
      if (i > 3) {
-// Pick a random valid filler
+    // Pick a random valid filler
       const randomIndex =
       Math.floor(Math.random() * remainingFillers.length);
 
@@ -321,7 +321,7 @@ const experimentalTrials = [];
     remainingFillers = remainingFillers.filter(
       filler => filler.id !== selectedFiller.id
     );
-    };
+    }
   }
 
 // Shuffle the experimental trials
