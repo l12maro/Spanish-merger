@@ -16,6 +16,8 @@ const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
 
+
+
 const consent_trial = {
 	  type: jsPsychHtmlButtonResponse,
 	  stimulus: `<div class="instructions"> <h2>Acuerdo de consentimiento</h2> <p> Por favor lee este acuerdo de consentimiento con atención antes de decidir si quieres participar en este experimento. </p> <p> <strong>Descripción:</strong> Estás invitado a participar en una investigación sobre la lengua. El objetivo de esta investigación es entender los atributos sociales que las personas asocian a ciertas formas de hablar. Esta investigación tiene lugar en la plataforma Prolific, con participantes de España. Si decides participar en esta investigación, escucharás voces de hablantes nativos de español y compartirás tu percepción. </p> <p> <strong>Duración:</strong> Esta tarea durará el tiempo compartido en Prolific. Puedes retirar tu participación de este estudio en cualquier momento. </p> <p> <strong>Riesgos y Beneficios:</strong> Los datos de este estudio serán almacenados de manera segura, en cumplimiento con las normas de la Universidad de Stanford, minimizando el riesgo de violación de confidencialidad. Esta investigación avanza en nuestro entendimiento científico de qué características sociales se asocian con ciertas formas de hablar. No podemos ni garantizamos ni prometemos que recibirás algún beneficio de este estudio. </p> <p> <strong>Compensación:</strong> Recibirás como pago la cantidad publicada en Prolific. Si no completas este estudio, recibirás un pago proporcional al tiempo que hayas dedicado. Además, podrías ser elegible para pagos bonus según se describe en las instrucciones. </p> <p> <strong>Derechos de los participantes:</strong> Si has leído este formulario y has decidido participar en este proyecto, por favor entiende que tu participación es voluntaria y tienes el derecho a retirar tu consentimiento o interrumpir tu participación en cualquier momento sin penalización ni pérdida de beneficios a los que de otra manera tengas derecho. La alternativa es no participar. Tienes el derecho a rechazar responder preguntas particulares. Los resultados de este estudio de investigación pueden ser presentados en reuniones científicas o profesionales o publicados en revistas científicas. Tu privacidad individual será mantenida en todos los datos publicados y escritos que resulten de este estudio. De acuerdo con las normas científicas, los datos de este estudio pueden ser utilizados o compartidos con otros investigadores para investigación futura (después de eliminar información identificable) sin consentimiento adicional de ti. </p> <p> <strong>Información de Contacto:</strong> Si tienes alguna pregunta, inquietud o queja sobre esta investigación, su procedimiento, riesgos y beneficios, contacta al Director del Protocolo, Robert Hawkins (<a href="mailto:rdhawkins@stanford.edu">rdhawkins@stanford.edu</a>, 217-549-6923). </p> <p> <strong>Contacto Independiente:</strong> Si no estás satisfecho con la forma en que se está llevando a cabo este estudio, o si tienes alguna preocupación, queja o preguntas generales sobre la investigación o tus derechos como participante, por favor contacta al Comité de Revisión Institucional (IRB) de Stanford para hablar con alguien independiente del equipo de investigación al 650-723-2480 o al 1-866-680-2906, o envía un correo electrónico a irbnonmed@stanford.edu. También puedes escribir al IRB de Stanford, Universidad de Stanford, 1705 El Camino Real, Palo Alto, CA 94306. Por favor guarda o imprime una copia de esta página para tus registros. </p> <p> <strong>Si aceptas participar en esta investigación, por favor haz clic en "Estoy de acuerdo"</strong> </p></br> </div>`,
@@ -48,7 +50,9 @@ const consent_trial = {
 
 // --- Latin square assignment ---
 // Randomly assign participant to one of 2 lists
-const listNumber = Math.floor(Math.random() * 2);
+//const listNumber = Math.floor(Math.random() * 2);
+let listNumber;
+
 
 // Assign conditions to items using Latin square
 // const conditionNames = [
@@ -281,48 +285,48 @@ const restBreak = {
 // --- Build experimental block ---
 // Assign conditions to critical items
 // Copy fillers so we can remove used ones
-let remainingFillers = [...fillerItems];
+// let remainingFillers = [...fillerItems];
 
-const experimentalTrials = [];
+// const experimentalTrials = [];
 
- for (let i = 0; i < criticalItems.length; i++) {
-   const item = criticalItems[i];
-   const filler = fillerItems[i % fillerItems.length]; // Cycle through fillers if fewer than critical items
-  //  const condition = getConditionForItem(i, listNumber);
-  //  const conditionData = item.conditions[condition];
+//  for (let i = 0; i < criticalItems.length; i++) {
+//    const item = criticalItems[i];
+//    const filler = fillerItems[i % fillerItems.length]; // Cycle through fillers if fewer than critical items
+//   //  const condition = getConditionForItem(i, listNumber);
+//   //  const conditionData = item.conditions[condition];
 
-    // Add ONE experimental guise
-    const experimentalCondition =
-      getExperimentalCondition(i, listNumber);
+//     // Add ONE experimental guise
+//     const experimentalCondition =
+//       getExperimentalCondition(i, listNumber);
 
-    experimentalTrials.push({
-     itemId: item.id,
-     condition: experimentalCondition,
-     conditionData: item.conditions[experimentalCondition],
-     audio: item.conditions[experimentalCondition].audio
-   });
+//     experimentalTrials.push({
+//      itemId: item.id,
+//      condition: experimentalCondition,
+//      conditionData: item.conditions[experimentalCondition],
+//      audio: item.conditions[experimentalCondition].audio
+//    });
 
-     // Add fillers trial
-     if (i > 3) {
-    // Pick a random valid filler
-      const randomIndex =
-      Math.floor(Math.random() * remainingFillers.length);
+//      // Add fillers trial
+//      if (i > 3) {
+//     // Pick a random valid filler
+//       const randomIndex =
+//       Math.floor(Math.random() * remainingFillers.length);
 
-      const selectedFiller = remainingFillers[randomIndex];
+//       const selectedFiller = remainingFillers[randomIndex];
 
-      experimentalTrials.push({
-      itemId: selectedFiller.id,
-      condition: "filler",
-      conditionData: null,
-      audio: selectedFiller.audio
-    });
+//       experimentalTrials.push({
+//       itemId: selectedFiller.id,
+//       condition: "filler",
+//       conditionData: null,
+//       audio: selectedFiller.audio
+//     });
 
-    // Remove used filler so it cannot repeat
-    remainingFillers = remainingFillers.filter(
-      filler => filler.id !== selectedFiller.id
-    );
-    }
-  }
+//     // Remove used filler so it cannot repeat
+//     remainingFillers = remainingFillers.filter(
+//       filler => filler.id !== selectedFiller.id
+//     );
+//     }
+//   }
 
 // Shuffle the experimental trials
 function shuffle(array) {
@@ -334,12 +338,12 @@ function shuffle(array) {
   return arr;
 }
 
- const shuffledTrials = shuffle(experimentalTrials);
+//  const shuffledTrials = shuffle(experimentalTrials);
 
-// Split into two halves for rest break
- const halfPoint = Math.ceil(shuffledTrials.length / 2);
- const firstHalf = shuffledTrials.slice(0, halfPoint);
- const secondHalf = shuffledTrials.slice(halfPoint);
+// // Split into two halves for rest break
+//  const halfPoint = Math.ceil(shuffledTrials.length / 2);
+//  const firstHalf = shuffledTrials.slice(0, halfPoint);
+//  const secondHalf = shuffledTrials.slice(halfPoint);
 
  function buildTrialBlock(trialList) {
    const timeline = [];
@@ -401,17 +405,97 @@ const save_data = {
   data_string: ()=>jsPsych.data.get().csv()
 };
 
-// --- Run experiment ---
-const timeline = [
-  consent_trial,
-  prolific_id_trial,
-  welcomeScreen,
-  instructionsScreen,
-  ...firstBlock,
-//  restBreak,
-  ...secondBlock,
-  debrief,
-  save_data
-];
+// // --- Run experiment ---
+// const timeline = [
+//   consent_trial,
+//   prolific_id_trial,
+//   welcomeScreen,
+//   instructionsScreen,
+//   ...firstBlock,
+// //  restBreak,
+//   ...secondBlock,
+//   debrief,
+//   save_data
+// ];
 
-jsPsych.run(timeline);
+//jsPsych.run(timeline);
+
+async function createExperiment() {
+
+  // Get balanced condition assignment from DataPipe
+  listNumber = await jsPsychPipe.getCondition("T8BJlXfl1ZUY");
+
+  console.log("Assigned condition:", listNumber);
+
+  jsPsych.data.addProperties({
+  assigned_list: listNumber
+});
+
+  // --- Build experimental block ---
+  let remainingFillers = [...fillerItems];
+
+  const experimentalTrials = [];
+
+  for (let i = 0; i < criticalItems.length; i++) {
+
+    const item = criticalItems[i];
+
+    const experimentalCondition =
+      getExperimentalCondition(i, listNumber);
+
+    experimentalTrials.push({
+      itemId: item.id,
+      condition: experimentalCondition,
+      conditionData: item.conditions[experimentalCondition],
+      audio: item.conditions[experimentalCondition].audio
+    });
+
+    if (i > 3) {
+
+      const randomIndex =
+        Math.floor(Math.random() * remainingFillers.length);
+
+      const selectedFiller = remainingFillers[randomIndex];
+
+      experimentalTrials.push({
+        itemId: selectedFiller.id,
+        condition: "filler",
+        conditionData: null,
+        audio: selectedFiller.audio
+      });
+
+      remainingFillers = remainingFillers.filter(
+        filler => filler.id !== selectedFiller.id
+      );
+    }
+  }
+
+  const shuffledTrials = shuffle(experimentalTrials);
+
+  const halfPoint = Math.ceil(shuffledTrials.length / 2);
+
+  const firstHalf = shuffledTrials.slice(0, halfPoint);
+
+  const secondHalf = shuffledTrials.slice(halfPoint);
+
+  const firstBlock = buildTrialBlock(firstHalf);
+
+  const secondBlock = buildTrialBlock(secondHalf);
+
+  // --- Timeline ---
+  const timeline = [
+    consent_trial,
+    prolific_id_trial,
+    welcomeScreen,
+    instructionsScreen,
+    ...firstBlock,
+    // restBreak,
+    ...secondBlock,
+    debrief,
+    save_data
+  ];
+
+  jsPsych.run(timeline);
+}
+
+createExperiment();
