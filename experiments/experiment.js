@@ -449,25 +449,17 @@ async function createExperiment() {
       conditionData: item.conditions[experimentalCondition],
       audio: item.conditions[experimentalCondition].audio
     });
+  }
 
-    if (i > 3) {
-
-      const randomIndex =
-        Math.floor(Math.random() * remainingFillers.length);
-
-      const selectedFiller = remainingFillers[randomIndex];
-
-      experimentalTrials.push({
-        itemId: selectedFiller.id,
-        condition: "filler",
-        conditionData: null,
-        audio: selectedFiller.audio
-      });
-
-      remainingFillers = remainingFillers.filter(
-        filler => filler.id !== selectedFiller.id
-      );
-    }
+  // Add all fillers once the critical trials are in place.
+  // They will be shuffled together with the critical trials below.
+  for (const filler of remainingFillers) {
+    experimentalTrials.push({
+      itemId: filler.id,
+      condition: "filler",
+      conditionData: null,
+      audio: filler.audio
+    });
   }
 
   const shuffledTrials = shuffle(experimentalTrials);
