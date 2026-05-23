@@ -360,8 +360,8 @@ function shuffle(array) {
    return timeline;
  }
 
- const firstBlock = buildTrialBlock(firstHalf);
- const secondBlock = buildTrialBlock(secondHalf);
+//  const firstBlock = buildTrialBlock(firstHalf);
+//  const secondBlock = buildTrialBlock(secondHalf);
 
 // Ask for Prolific ID
   const prolific_id_trial = {
