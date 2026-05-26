@@ -338,8 +338,8 @@ function shuffle(array) {
   return arr;
 }
 
-// Constrained shuffle: avoid adjacent ceceo<->seseo transitions
-// and avoid consecutive trials from the same speaker.
+// Constrained shuffle: avoid adjacent conditions without a filler between them,
+// avoid consecutive trials from the same speaker, and avoid direct condition-to-condition adjacency.
 function constrainedShuffle(trials, maxRestarts = 1000) {
   // Helper to extract speaker from audio filename.
   function getSpeaker(audio) {
@@ -352,14 +352,17 @@ function constrainedShuffle(trials, maxRestarts = 1000) {
     return name;
   }
 
+  function isCondition(condition) {
+    return condition === 'ceceo' || condition === 'seseo';
+  }
+
   function violates(prev, next) {
     if (!prev || !next) return false;
     const a = prev.condition;
     const b = next.condition;
-    // forbid ceceo next to seseo in either order
-    const isCeceo = (c) => c === 'ceceo';
-    const isSeseo = (c) => c === 'seseo';
-    if ((isCeceo(a) && isSeseo(b)) || (isSeseo(a) && isCeceo(b))) return true;
+
+    // forbid direct condition-to-condition adjacency
+    if (isCondition(a) && isCondition(b)) return true;
 
     // forbid same speaker consecutively
     const sa = getSpeaker(prev.audio);
@@ -374,16 +377,32 @@ function constrainedShuffle(trials, maxRestarts = 1000) {
   for (let attempt = 0; attempt < maxRestarts; attempt++) {
     const remaining = shuffle(originals);
     const result = [];
+    let seenCondition = false;
+    let fillerSinceLastCondition = false;
 
     while (remaining.length) {
       let placed = false;
       // Try random candidates until we find one that doesn't violate constraints
       for (let i = 0; i < remaining.length; i++) {
         const cand = remaining[i];
+        const candIsCondition = isCondition(cand.condition);
+
+        if (candIsCondition && seenCondition && !fillerSinceLastCondition) {
+          continue;
+        }
+
         if (!violates(result[result.length - 1], cand)) {
           result.push(cand);
           remaining.splice(i, 1);
           placed = true;
+
+          if (candIsCondition) {
+            seenCondition = true;
+            fillerSinceLastCondition = false;
+          } else if (cand.condition === 'filler') {
+            fillerSinceLastCondition = true;
+          }
+
           break;
         }
       }
