@@ -96,34 +96,43 @@ function getExperimentalCondition(itemIndex, list) {
     // LIKERT SCALES
     if (q.scales) {
 
-      questionHTML += `<div class="question-block">`;
-      questionHTML += `<p><strong>${q.question || ""}</strong></p>`;
-
-      q.scales.forEach((scale, i) => {
-
-        questionHTML += `
-          <p>${scale.prompt || `${scale.left} — ${scale.right}`}</p>
-        `;
-
-        for (let j = 1; j <= (scale.points || 5); j++) {
-
-          questionHTML += `
-            <label>
-              <input
-                type="radio"
-                name="${q.id}_s${i + 1}"
-                value="${j}"
-                required
-              >
-              ${j}
-            </label>
-          `;
+        // If this is a filler trial marked for attention and the question is `q1`,
+        // insert an attention-check scale in the middle of the scales array.
+        let scalesToRender = q.scales;
+        if (q.id === 'q1' && condition === 'filler' && item && item.attention) {
+          const mid = Math.floor(q.scales.length / 2);
+          const attentionScale = { left: 'selecciona este', right: 'no selecciones este', points: q.scales[mid] ? q.scales[mid].points : 6 };
+          scalesToRender = [...q.scales.slice(0, mid), attentionScale, ...q.scales.slice(mid)];
         }
 
-        questionHTML += `<br><br>`;
-      });
+        questionHTML += `<div class="question-block">`;
+        questionHTML += `<p><strong>${q.question || ""}</strong></p>`;
 
-      questionHTML += `</div>`;
+        scalesToRender.forEach((scale, i) => {
+
+          questionHTML += `
+            <p>${scale.prompt || `${scale.left} — ${scale.right}`}</p>
+          `;
+
+          for (let j = 1; j <= (scale.points || 5); j++) {
+
+            questionHTML += `
+              <label>
+                <input
+                  type="radio"
+                  name="${q.id}_s${i + 1}"
+                  value="${j}"
+                  required
+                >
+                ${j}
+              </label>
+            `;
+          }
+
+          questionHTML += `<br><br>`;
+        });
+
+        questionHTML += `</div>`;
     }
 
     // MULTIPLE CHOICE
@@ -477,7 +486,7 @@ const debrief = {
       <div class="instructions">
         <h2>Experimento Completado</h2>
         <p>Gracias por tu participación!</p>
-        <p>Presiona <strong>Espacio</strong> para ver tus datos.</p>
+        <p>Presiona <strong>Espacio</strong> para guardar tu participación y continuar en Prolific.</p>
       </div>
     `
 };
@@ -557,6 +566,21 @@ async function createExperiment() {
   const firstHalf = shuffledTrials.slice(0, halfPoint);
 
   const secondHalf = shuffledTrials.slice(halfPoint);
+
+  // Mark one filler near the end of each half as an attention check.
+  function markAttentionInHalf(half) {
+    for (let i = half.length - 1; i >= 0; i--) {
+      if (half[i].condition === 'filler') {
+        half[i].attention = true;
+        console.log('Marked attention on filler', half[i].itemId);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  markAttentionInHalf(firstHalf);
+  markAttentionInHalf(secondHalf);
 
   const firstBlock = buildTrialBlock(firstHalf);
 
