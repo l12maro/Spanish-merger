@@ -62,15 +62,24 @@ const criticalItems = [
   }
 ];
 
-// Insert control/filler items here (sentences without coronal fricatives)
-const fillerItems = [
-  { id: "1", audio: "../data/filler-R.ogg" },
-  { id: "2", audio: "../data/filler-I.ogg" },
-  { id: "3", audio: "../data/filler-L.ogg" },
-  { id: "4", audio: "../data/filler-M.ogg" },
-  { id: "5", audio: "../data/filler-V.ogg" },
-  { id: "6", audio: "../data/filler-Isa.ogg" }
+// Insert control items here (sentences without coronal fricatives)
+const controlItems = [
+  { id: "1", audio: "../data/control-R.ogg" },
+  { id: "2", audio: "../data/control-I.ogg" },
+  { id: "3", audio: "../data/control-L.ogg" },
+  { id: "4", audio: "../data/control-M.ogg" },
+  { id: "5", audio: "../data/control-V.ogg" },
+  { id: "6", audio: "../data/control-Isa.ogg" }
 ]
+
+const fillerItems = [
+  { id: "1", audio: "../data/filler-1.ogg" },
+  { id: "2", audio: "../data/filler-2.ogg" },
+  { id: "3", audio: "../data/filler-3.ogg" },
+  { id: "4", audio: "../data/filler-4.ogg" },
+  { id: "5", audio: "../data/filler-5.ogg" },
+  { id: "6", audio: "../data/filler-6.ogg" }
+];
 
 // Questionnaire items presented after each trial.
 const questionItems = [
@@ -129,5 +138,5 @@ const questionItems = [
 
 // Export for module environments if needed
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { criticalItems, fillerItems, questionItems };
+  module.exports = { criticalItems, controlItems, fillerItems, questionItems };
 }

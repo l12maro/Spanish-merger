@@ -2,7 +2,7 @@
 // Matched-guise experiment
 // Regan (2022)
 
-//const { fillerItems } = require("./stimuli");
+//const { controlItems } = require("./stimuli");
 
 const jsPsych = initJsPsych({
   on_finish: function () {
@@ -262,7 +262,7 @@ const instructionsScreen = {
   stimulus: `
     <div class="instructions">
       <h2>Las instrucciones</h2>
-      <p>Vas a escuchar a <u>10 personas</u>. Cada grabación dura entre <u>2-5 segundos</u>. Escucha las grabaciones tantas veces como quieras. Debes responder a las preguntas después de cada grabación.</p>
+      <p>Vas a escuchar a <u>18 personas</u>. Cada grabación dura entre <u>2-5 segundos</u>. Escucha las grabaciones tantas veces como quieras. Debes responder a las preguntas después de cada grabación.</p>
       <p>Debes estar en un lugar sin ruido y ponerte <strong><u>los auriculares</u></strong> para poder escuchar bien cada grabación. El estudio <strong><u>durará 10 minutos</u></strong>. No lo pienses demasiado, debes usar tus primeras intuiciones.</p>
       <p>Pulsa <strong>Espacio</strong> para comenzar.</p>
     </div>
@@ -274,9 +274,9 @@ const restBreak = {
   type: jsPsychHtmlKeyboardResponse, 
   stimulus: `
     <div class="instructions">
-      <h2>Rest Break</h2>
-      <p>You are halfway through the experiment. Please take a short break.</p>
-      <p>When you are ready to continue, press <strong>Space</strong>.</p>
+      <h2>Descanso</h2>
+      <p>Estás a la mitad del experimento. Por favor, toma un breve descanso.</p>
+      <p>Cuando estés listo para continuar, presiona <strong>Espacio</strong>.</p>
     </div>
   `,
   choices: [" "]
@@ -284,14 +284,14 @@ const restBreak = {
 
 // --- Build experimental block ---
 // Assign conditions to critical items
-// Copy fillers so we can remove used ones
-// let remainingFillers = [...fillerItems];
+// Copy controls so we can remove used ones
+// let remainingcontrols = [...controlItems];
 
 // const experimentalTrials = [];
 
 //  for (let i = 0; i < criticalItems.length; i++) {
 //    const item = criticalItems[i];
-//    const filler = fillerItems[i % fillerItems.length]; // Cycle through fillers if fewer than critical items
+//    const control = controlItems[i % controlItems.length]; // Cycle through controls if fewer than critical items
 //   //  const condition = getConditionForItem(i, listNumber);
 //   //  const conditionData = item.conditions[condition];
 
@@ -306,24 +306,24 @@ const restBreak = {
 //      audio: item.conditions[experimentalCondition].audio
 //    });
 
-//      // Add fillers trial
+//      // Add controls trial
 //      if (i > 3) {
-//     // Pick a random valid filler
+//     // Pick a random valid control
 //       const randomIndex =
-//       Math.floor(Math.random() * remainingFillers.length);
+//       Math.floor(Math.random() * remainingcontrols.length);
 
-//       const selectedFiller = remainingFillers[randomIndex];
+//       const selectedControl = remainingcontrols[randomIndex];
 
 //       experimentalTrials.push({
-//       itemId: selectedFiller.id,
-//       condition: "filler",
+//       itemId: selectedControl.id,
+//       condition: "control",
 //       conditionData: null,
-//       audio: selectedFiller.audio
+//       audio: selectedControl.audio
 //     });
 
-//     // Remove used filler so it cannot repeat
-//     remainingFillers = remainingFillers.filter(
-//       filler => filler.id !== selectedFiller.id
+//     // Remove used control so it cannot repeat
+//     remainingcontrols = remainingcontrols.filter(
+//       control => control.id !== selectedControl.id
 //     );
 //     }
 //   }
@@ -498,13 +498,13 @@ async function createExperiment() {
 });
 
   // --- Build experimental block ---
-  let remainingFillers = [...fillerItems];
-
   const experimentalTrials = [];
 
   for (let i = 0; i < criticalItems.length; i++) {
 
     const item = criticalItems[i];
+    const control = controlItems[i];
+    const filler = fillerItems[i];
 
     const experimentalCondition =
       getExperimentalCondition(i, listNumber);
@@ -515,16 +515,19 @@ async function createExperiment() {
       conditionData: item.conditions[experimentalCondition],
       audio: item.conditions[experimentalCondition].audio
     });
-  }
 
-  // Add all fillers once the critical trials are in place.
-  // They will be shuffled together with the critical trials below.
-  for (const filler of remainingFillers) {
     experimentalTrials.push({
       itemId: filler.id,
       condition: "filler",
       conditionData: null,
       audio: filler.audio
+    });
+
+    experimentalTrials.push({
+      itemId: control.id,
+      condition: "control",
+      conditionData: null,
+      audio: control.audio
     });
   }
 
@@ -547,7 +550,7 @@ async function createExperiment() {
     welcomeScreen,
     instructionsScreen,
     ...firstBlock,
-    // restBreak,
+    restBreak,
     ...secondBlock,
     debrief,
     save_data
