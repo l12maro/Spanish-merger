@@ -89,12 +89,13 @@ const questionItems = [
     // Six 6-point Likert scales. Each scale is an object with `left` and `right`
     // labels and an optional `points` field (default 5).
     scales: [
+      { left: "informal", right: "formal", points: 6 },
       { left: "de nivel socioeconomico bajo", right: "de nivel socioeconomico alto", points: 6 },
       { left: "con menos estudios", right: "con más estudios", points: 6 },
       { left: "menos masculina", right: "más masculina", points: 6 },
       { left: "menos simpática", right: "más simpática", points: 6 },
       { left: "más rural", right: "más urbana", points: 6 },
-      { left: "informal", right: "formal", points: 6 }
+      { left: "poco natural", right: "natural", points: 6 }
     ]
   },
   {
