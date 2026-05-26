@@ -73,12 +73,12 @@ const controlItems = [
 ]
 
 const fillerItems = [
-  { id: "1", audio: "../data/filler-1.ogg" },
+  { id: "1", audio: "../data/filler-1.wav" },
   { id: "2", audio: "../data/filler-2.ogg" },
-  { id: "3", audio: "../data/filler-3.ogg" },
-  { id: "4", audio: "../data/filler-4.ogg" },
-  { id: "5", audio: "../data/filler-5.ogg" },
-  { id: "6", audio: "../data/filler-6.ogg" }
+  { id: "3", audio: "../data/filler-3.wav" },
+  { id: "4", audio: "../data/filler-4.wav" },
+  { id: "5", audio: "../data/filler-5.wav" },
+  { id: "6", audio: "../data/filler-6.wav" }
 ];
 
 // Questionnaire items presented after each trial.
