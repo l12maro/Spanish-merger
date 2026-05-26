@@ -101,7 +101,7 @@ function getExperimentalCondition(itemIndex, list) {
         let scalesToRender = q.scales;
         if (q.id === 'q1' && condition === 'filler' && item && item.attention) {
           const mid = Math.floor(q.scales.length / 2);
-          const attentionScale = { left: 'selecciona este', right: 'no selecciones este', points: q.scales[mid] ? q.scales[mid].points : 6 };
+          const attentionScale = { left: 'selecciona uno', right: 'no selecciones otro', points: q.scales[mid] ? q.scales[mid].points : 6 };
           scalesToRender = [...q.scales.slice(0, mid), attentionScale, ...q.scales.slice(mid)];
         }
 
