@@ -338,6 +338,72 @@ function shuffle(array) {
   return arr;
 }
 
+// Constrained shuffle: avoid adjacent ceceo<->seseo transitions
+// and avoid consecutive trials from the same speaker.
+function constrainedShuffle(trials, maxRestarts = 1000) {
+  // Helper to extract speaker from audio filename.
+  function getSpeaker(audio) {
+    if (!audio) return null;
+    const file = audio.split('/').pop();
+    const name = file.replace(/\.[^/.]+$/, "");
+    const parts = name.split('-');
+    // If filename contains a dash, assume speaker is everything after the first dash
+    if (parts.length >= 2) return parts.slice(1).join('-');
+    return name;
+  }
+
+  function violates(prev, next) {
+    if (!prev || !next) return false;
+    const a = prev.condition;
+    const b = next.condition;
+    // forbid ceceo next to seseo in either order
+    const isCeceo = (c) => c === 'ceceo';
+    const isSeseo = (c) => c === 'seseo';
+    if ((isCeceo(a) && isSeseo(b)) || (isSeseo(a) && isCeceo(b))) return true;
+
+    // forbid same speaker consecutively
+    const sa = getSpeaker(prev.audio);
+    const sb = getSpeaker(next.audio);
+    if (sa && sb && sa === sb) return true;
+
+    return false;
+  }
+
+  const originals = [...trials];
+
+  for (let attempt = 0; attempt < maxRestarts; attempt++) {
+    const remaining = shuffle(originals);
+    const result = [];
+
+    while (remaining.length) {
+      let placed = false;
+      // Try random candidates until we find one that doesn't violate constraints
+      for (let i = 0; i < remaining.length; i++) {
+        const cand = remaining[i];
+        if (!violates(result[result.length - 1], cand)) {
+          result.push(cand);
+          remaining.splice(i, 1);
+          placed = true;
+          break;
+        }
+      }
+
+      if (!placed) {
+        // dead end — break and restart
+        break;
+      }
+    }
+
+    if (result.length === originals.length) {
+      return result;
+    }
+    // else restart with a fresh randomization
+  }
+
+  console.warn('constrainedShuffle: failed to build fully constrained sequence — returning best-effort shuffle');
+  return shuffle(trials);
+}
+
 //  const shuffledTrials = shuffle(experimentalTrials);
 
 // // Split into two halves for rest break
@@ -462,7 +528,7 @@ async function createExperiment() {
     });
   }
 
-  const shuffledTrials = shuffle(experimentalTrials);
+  const shuffledTrials = constrainedShuffle(experimentalTrials);
 
   const halfPoint = Math.ceil(shuffledTrials.length / 2);
 

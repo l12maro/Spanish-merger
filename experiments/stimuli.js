@@ -64,10 +64,12 @@ const criticalItems = [
 
 // Insert control/filler items here (sentences without coronal fricatives)
 const fillerItems = [
-  { id: "1", audio: "../data/filler-D.ogg" },
+  { id: "1", audio: "../data/filler-R.ogg" },
   { id: "2", audio: "../data/filler-I.ogg" },
   { id: "3", audio: "../data/filler-L.ogg" },
   { id: "4", audio: "../data/filler-M.ogg" },
+  { id: "5", audio: "../data/filler-V.ogg" },
+  { id: "6", audio: "../data/filler-Isa.ogg" }
 ]
 
 // Questionnaire items presented after each trial.
