@@ -16,7 +16,7 @@ const criticalItems = [
     id: 1,
     conditions: {
       ceceo: { audio: "../data/ceceo-I.ogg" },
-      seseo: { audio: "../data/seseo-I.ogg" },
+      seseo: { audio: "../data/seseo-I.wav" },
     },
     gender: "F"
   },
@@ -47,7 +47,7 @@ const criticalItems = [
   {
     id: 5,
     conditions: {
-      ceceo: { audio: "../data/ceceo-R.ogg" },
+      ceceo: { audio: "../data/ceceo-R.wav" },
       seseo: { audio: "../data/seseo-R.ogg" },
     },
     gender: "M"
