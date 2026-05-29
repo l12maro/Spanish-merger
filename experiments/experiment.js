@@ -272,7 +272,7 @@ const instructionsScreen = {
     <div class="instructions">
       <h2>Las instrucciones</h2>
       <p>Vas a escuchar a <u>18 personas</u>. Cada grabación dura entre <u>2-7 segundos</u>. Escucha las grabaciones tantas veces como quieras. Debes responder a las preguntas después de cada grabación.</p>
-      <p>Debes estar en un lugar sin ruido y ponerte <strong><u>los auriculares</u></strong> para poder escuchar bien cada grabación. El estudio <strong><u>durará 15 minutos</u></strong>. No lo pienses demasiado, debes usar tus primeras intuiciones.</p>
+      <p>Debes estar en un lugar sin ruido y ponerte <strong><u>los auriculares</u></strong> para poder escuchar bien cada grabación. El estudio <strong><u>durará 20 minutos</u></strong>. No lo pienses demasiado, debes usar tus primeras intuiciones.</p>
       <p>Pulsa <strong>Espacio</strong> para comenzar.</p>
     </div>
   `,
