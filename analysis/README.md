@@ -23,3 +23,21 @@ This script:
 - extracts attention-check responses from filler trials
 - prints a warning if an attention check was not answered with `1`
 - writes a readable `analysis/parsed_experiment_data.json` output file
+
+A new analysis pipeline is available in `analysis/analysis_pipeline.py`. It:
+- loads `analysis/parsed_experiment_data.json`
+- converts perceived character ratings to centered numeric scales
+- maps perceived occupation to a five-point occupational prestige scale
+- maps perceived age to a five-point age scale
+- performs PCA and factor analysis on the eight continuous measures and on the six retained measures after excluding friendliness and age
+- derives three dependent social measures: status, urban-ness, and formality
+- fits mixed-effects linear regression models for each social measure using speaker and listener identifiers when available
+- fits a multinomial logistic regression model for perceived speaker origin
+
+Usage:
+
+```bash
+python3 analysis/analysis_pipeline.py
+```
+
+Results are written to `analysis/analysis_results/`.

@@ -1,0 +1,534 @@
+---
+title: "Replication of Study 'The social meaning of a merger: The evaluation of an Andalusian Spanish consonant merger (ceceo)' by Regan (2022, Language in Society)"
+author: "Lorena Martin Rodriguez (lmaro@stanford.edu)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc_depth: 3
+---
+
+## Introduction
+
+Regan (2022) explored the social evaluations associated with the Andalusian Spanish dialectal feature of _ceceo_ and its counterpart, _distinción_. While standard Spanish uses _distinción_, the pronunciation of sounds [s̪] and [θ] as two different phonemes, _ceceo_ refers to the merger of both sounds as [θ], which occurs is certain areas of Andalusian Spanish. The author employed a matched-guise experiment using twelve Western Andalusian speakers to explore the social evaluations associated with both _distinción_ and _ceceo_. Participants listened to speech that included different pronunciation of [s̪] and [θ] in syllable-initial position and evaluated them based on social status, urban vs rural, professions and formality, amongst other factors. The results found that speakers of _distinción_ were evaluated as being of higher social status, urban and more formal than those of _ceceo_.
+
+However, the study did not include another form of fricative merger in Spanish, _seseo_. _Seseo_ refers to the merger of the sounds [s̪] and [θ] as [s̪]. Like _ceceo_, this merger is a dialectal variation found in Andalusian dialect. The current study aims to analyze the social evaluations of both dialectal mergers, _ceceo_ and _seseo_. Since dialectal areas of _seseo_ include large urban areas within Andalusia, it is hypothesized that _seseo_ will be associated with higher social status and more urban and more formal than _ceceo_, even in areas where _ceceo_ is the dominant dialectal feature. Thus, this study is not a exact replication of Regan (2021), since one of the variables is different from the original study. However, based on previous literature, similar results from the original study are expected.
+
+## Methods
+
+### Planned Sample
+
+The original study consisted on 221 participants who were from the cities from where the audio cues were taken. This replication study does not target one specific location. The expected sample size consisted of 100 to 200 listeners. The listeners should be nationals of Spain who are native speakers of Peninsular Spanish and have spent more than five years in the town. The study will control for place of residence to ensure a balanced sample between urban and rural participants as well as speakers of both _seseo_ and _ceceo_ dialects. 
+
+### Materials
+
+The original study extracted its stimuli from informal sociolinguistic interviews that have been conducted by the author. In the current replication, the stimuli is generated following the criteria of inclusion used in the original experiment. The stimuli contains data from six speakers, three female spakers and three male speakers. The speakers recorded three different audios for three different conditions: 1. _ceceo_, _seseo_ and _control_. Each speaker received a sentence with coronal fricatives, and they were instructed to read it using a _ceceo_ guise and a _seseo_ guise. Then they read a second passage that did not contain any coronal fricative, they were instructed to read it naturally.
+
+### Procedure	
+
+The procedure followed Regan (2021), but was modified considering the conditions of the experiment (not done on site) and the availability of materials to create the speaker guises. The following is a citation of the original procedure, with changes indicated between brackets:
+
+"The guises were uploaded and organized into an online survey [coded with JavaScript and hosted in Github]. The two guises (ceceo, [seseo]) for each of the [six] speakers were divided into two separate surveys balanced by variant and speaker gender[. These] two versions were branched so that each participant would be randomly assigned to one version. Consequently, listeners heard each voice only once [in either _ceceo_ or _seseo_ guise]. Splitting the experiment into two surveys reduced the time of completion and avoided voice recognition given each speaker's unique utterance.
+
+There were [six control utterances and six distractors] placed into each version, balanced by speaker gender[.] The [control and] distractors did not include syllable-initial coronal fricatives. [Control sentences were uttered by the same speakers of _ceceo_ and _seseo_ and were used to observe the participants'] Each version of the survey was pseudo-randomized to ensure that listeners did not hear several ceceo or distinción guises back-to-back[, nor the same voice in the experimental condition and in the control condition back to back].
+
+Upon consenting to the terms of the study, participants were told that they would hear two to [seven] second recordings from [eighteen] different speakers[.]. They were permitted to listen to each recording as many times as they chose and then had to respond to a series of questions. They were asked to wear headphones and listen to the recordings in a quiet place. After hearing each recording, the listeners had to rate each speaker on nine different questions[.] The first six questions were a set of social characteristics based on a six-point Likert scale; an even number was implemented to avoid neutral responses following previous studies[.] For these social characteristics (only English scripts are provided here), they were asked ‘This persons sounds…’: (i) ‘of low socioeconomic level’/‘of high socioeconomic level’; (ii) ‘with less studies’/‘with more studies’; (iii) ‘less masculine’/‘more masculine’; (iv) ‘less friendly’/‘more friendly’; (v) ‘more rural’/‘more urban’; [(vi)] ‘informal’/‘formal’[; and (vii) 'less natural'/'more natural'. Moreover, two fillers had attention checks in the form of a six-point Likert scale where participants were instructed to select the first option]. There were also three multiple-choice questions. The first question of perceived occupation included: ‘works in a bar/restaurant’, ‘works in construction’, ‘works in a store’, ‘works in the field’, ‘is an administrator’, ‘is a teacher’, ‘is a doctor/lawyer’. The second question of perceived age included: < 30, 30–40, 40–50, 50–60, > 60. Finally, perceived origin included: Huelva[, Sevilla], and otro sitio ‘another place’. These questions were based on the [original study]. Finally, after completing all [eighteen] evaluations ([six] guises, [six control], [six] distractors)[.]" (Reagan, 2022: 492).
+
+### Analysis Plan
+
+The analysis followed Regan (2021), but was modified considering the conditions of the experiment and the availability of materials. The following is a citation of the original analysis, with changes indicated between brackets:
+
+"Following Barnes[.], perceived occupation was converted into a five-point scale based on occupational prestige scales in Spain [and] perceived age was converted into a five-point scale. Given the discrepancy between five and six-point scales, all values were centered on zero. A principle component analysis [was conducted in Python using sklearn library], with all [eight] continuous dependent measures to assess the potential number of underlying factors, followed by a factor analysis using the [FactorAnalyzer library. Based on the factor analysis, three dependent measures were chosen for analysis: Formality, Socioeconomic status and Urbanness].
+
+For each of these dependent measures a separate mixed effects linear regression model was created using the [sm and smf from statsmodels library in python] with two random intercepts of speaker and participant (listener) as well as the random slope of variant by participant. The independent variables tested in the various models included: variant (ceceo, distinción) [and] speaker gender (male, female)].
+
+As perceived origin was a three-way categorical dependent variable (Huelva, [Sevilla], otro sitio), a separate multinomial logistic regression model was fitted to the listeners’ evaluations of speaker origin using the [MNLogit] function in the [statsmodels] package[.]." (Reagan, 2022: 492), see modifications in section "Differences from original study".
+
+### Differences from Original Study
+
+#### Differences in Data Collection
+
+Stimuli are recorded from six speakers instead of 12, balanced by gender. Speakers are not be from Huelva or Lepe, as in the original study, but from Almonte. Listeners may be any speaker of Peninsular Spanish. In this experiment, the guises are performed by the speakers, while the original experiment created them digitally by manipulating the fricative sounds. The control items are extracted from public data. There were two guises: _ceceo_, like in the original study, and _seseo_, which substituted the original study's _distinción_ guise. Moreover, there were two kinds of non-condition audio stimuli: _control_, which was recorded by the participants using stimuli without coronal fricatives, and _fillers_ which were publicly available audios that did not include coronal fricatives.
+
+On the side of the participants, the original study collected Spanish speakers from two areas were _ceceo_ is prevalent in Western Andalusia: Huelva and Lepe. Speakers were also originally from those areas, so listeners took part on a perception study from their own dialect. In this study, participants were recruited online using Prolific, where all native speakers of Spanish from Peninsular Spain were eligible to ensure a sufficient sample. This difference may have affected the results, since speakers were not so attuned to specific dialectal features from Western Andalusian Spanish.
+
+#### Differences in Experimental Design
+
+Speakers will be asked for perceived origin regarding region (i.e. Huelva, Sevilla, otro sitio) rather than location.
+
+### Methods Addendum (Post Data Collection)
+
+Due to the difference in participant size and demographics, variables regarding listeners were disregarded. Instead, this experiment focused on the variables regarding speaker voices, namely the interaction of the condition listeners heard (whether _ceceo_ or _seseo_), and their social evaluations. 
+
+#### Actual Sample
+
+After consideration of funding, the expected size was decreased to the actual size of 56 participants, where six participants participated in the pilots (two pilots of three participants each), and 50 participants participated in the final study. All participants were native Spanish speakers, had Spanish nationality and were residents of Spain. Only one participant was excluded from the study because he provided no completion code and did not send their data. After the rejection of that participant, a new one was recruited from Prolific.
+
+A post-hoc power analysis was conducted using the scipy python library to determine the sample size required for a mixed effects linear regression model for each of the dependent measures (described in section Results). With an alpha level of α = 0.05 and a desired statistical power of 0.80, the analysis indicated that the current sample size was underpowered in all dependent measures, but especially in formality. The sample size of 50 participants only had a power of 0.16 to detect significant effects in formality, 0.23 for status, and 0.52 for urbanness. A sample size of N = 436 participants per group would be needed to detect significant effects with power of 0.80 across all dependent measures.
+
+![Figure 1: Power analysis for the current sample size of 50 participants across the three dependent measures](analysis/analysis_results/power_analysis_figure.png)
+
+#### Differences from pre-data collection methods plan
+
+The methods for the statistical analysis used the same kinds of models as the original study. However, as the analysis was conducted in Python rather than R, the packages were adapted accordingly.
+
+## Results
+
+### Data preparation
+
+The responses of the participants were parsed into a json file organized by participant. The json file automatically parsed the responses for attention checks. Passing the attention checks was a requirement for the participation in the study.
+
+Based on the content of the json file, responses were converted. Professions and age were mapped into a 5-point scale; gender of speakers was mapped into a binary for masculine and feminine, and responses of the 6-point Likert-scale were centered to match the 5-point scales of occupation and age. All variables were stored into a dataframe with the following columns: 'source_file', 'participant_id', 'trial_index': trial.get('trial_index'), 'item_id': trial.get('item_id'), 'condition', 'audio', 'variant', 'speaker', 'occupational_prestige', 'age_scale', 'perceived_origin', 'speaker_gender', 'condition_type'
+
+The Python code used to prepare the data is included below. AI (ChatGPT) was used to assist with the coding, with manual revisions of the code and its output to ensure its accuracy.
+
+```{python}
+### Data Preparation
+
+#### Load Relevant Libraries and Functions
+
+import csv
+import json
+import sys
+from pathlib import Path
+from typing import Dict, List, Optional
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+from factor_analyzer import FactorAnalyzer
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+import statsmodels.api as sm
+import statsmodels.formula.api as smf
+
+#### Import data
+
+##### Parse csv files into a unified json file with proper alerts for attention checks
+
+QUESTION_ITEMS = {
+    'q1': {
+        'question': 'Esta persona suena...',
+        'scales': [
+            {'id': 'q1_s1', 'prompt': 'informal — formal'},
+            {'id': 'q1_s2', 'prompt': 'de nivel socioeconómico bajo — de nivel socioeconómico alto'},
+            {'id': 'q1_s3', 'prompt': 'con menos estudios — con más estudios'},
+            {'id': 'q1_s4', 'prompt': 'menos masculina — más masculina'},
+            {'id': 'q1_s5', 'prompt': 'menos simpática — más simpática'},
+            {'id': 'q1_s6', 'prompt': 'más rural — más urbana'},
+            {'id': 'q1_s7', 'prompt': 'poco natural — natural'},
+        ],
+    },
+    'q2': {'question': '¿A qué crees que se dedica esta persona?'},
+    'q3': {'question': '¿Qué edad crees que tiene?'},
+    'q4': {'question': '¿De dónde crees que es esta persona?'},
+    'q5': {'question': '¿Algo más que se te ocurre de esta persona?'},
+}
+EXPECTED_Q1_SCALE_COUNT = len(QUESTION_ITEMS['q1']['scales'])
+
+
+def collect_csv_paths(paths):
+    csv_paths = []
+    for input_path in paths:
+        p = Path(input_path)
+        if p.is_dir():
+            csv_paths.extend(sorted(p.glob('*.csv')))
+        elif p.is_file() and p.suffix.lower() == '.csv':
+            csv_paths.append(p)
+        else:
+            print(f'Warning: skipped unsupported path {input_path}', file=sys.stderr)
+    return csv_paths
+
+
+def parse_response(response_text):
+    if not response_text:
+        return {}
+    try:
+        return json.loads(response_text)
+    except json.JSONDecodeError:
+        try:
+            return json.loads(response_text.strip())
+        except json.JSONDecodeError:
+            return {}
+
+
+def get_attention_check(response_obj):
+    q1_keys = sorted(k for k in response_obj if k.startswith('q1_s'))
+    if len(q1_keys) <= EXPECTED_Q1_SCALE_COUNT:
+        return None
+    attention_field = q1_keys[(len(q1_keys) - 1) // 2]
+    value = response_obj.get(attention_field)
+    return {
+        'field': attention_field,
+        'value': str(value) if value is not None else None,
+        'passed': value == 1 or value == '1',
+    }
+
+
+def build_trial(row, source_file):
+    response_obj = parse_response(row.get('response', ''))
+    trial = {
+        'source_file': str(source_file),
+        'participant_id': row.get('prolific_id') or None,
+        'trial_index': int(row['trial_index']) if row.get('trial_index') else None,
+        'item_id': row.get('item_id') or None,
+        'condition': row.get('condition') or None,
+        'audio': row.get('audio') or None,
+        'task': row.get('task') or None,
+        'response_type': row.get('trial_type') or None,
+        'time_elapsed': int(row['time_elapsed']) if row.get('time_elapsed') else None,
+        'response': response_obj,
+        'questions': [],
+        'attention_check': None,
+    }
+
+    if trial['task'] != 'audio_questions':
+        return trial
+
+    q1_keys = sorted(k for k in response_obj if k.startswith('q1_s'))
+    q1_scales = []
+    attention_index = None
+    if len(q1_keys) == EXPECTED_Q1_SCALE_COUNT + 1:
+        attention_index = (len(q1_keys) - 1) // 2
+
+    for index, key in enumerate(q1_keys):
+        if attention_index is not None and index == attention_index:
+            prompt = 'Atención (control)'
+        elif attention_index is not None and index > attention_index:
+            prompt = QUESTION_ITEMS['q1']['scales'][index - 1]['prompt']
+        else:
+            prompt = QUESTION_ITEMS['q1']['scales'][index]['prompt'] if index < len(QUESTION_ITEMS['q1']['scales']) else 'Atención (control)'
+        q1_scales.append({'field': key, 'prompt': prompt, 'value': str(response_obj.get(key, ''))})
+
+    attention_check = get_attention_check(response_obj)
+    if attention_check:
+        trial['attention_check'] = attention_check
+
+    trial['questions'].append({
+        'question_id': 'q1',
+        'question_text': QUESTION_ITEMS['q1']['question'],
+        'scales': q1_scales,
+        'attention_check': attention_check,
+    })
+
+    for qid in ['q2', 'q3', 'q4', 'q5']:
+        if qid in response_obj:
+            trial['questions'].append({
+                'question_id': qid,
+                'question_text': QUESTION_ITEMS[qid]['question'],
+                'response': response_obj[qid],
+            })
+
+    return trial
+
+
+def parse_csv_file(file_path):
+    trials = []
+    with open(file_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            trials.append(build_trial(row, file_path))
+    return trials
+
+
+def main():
+    if len(sys.argv) < 2:
+        print('Usage: python3 analysis/parse_experiment_data.py <csv-file|folder> [more files/folders]')
+        sys.exit(1)
+
+    input_paths = sys.argv[1:]
+    csv_paths = collect_csv_paths(input_paths)
+
+    if not csv_paths:
+        print('No CSV files found to parse.', file=sys.stderr)
+        sys.exit(1)
+
+    dataset = {}
+    errors = 0
+    warnings = 0
+
+    for csv_path in csv_paths:
+        trials = []
+        for trial in parse_csv_file(csv_path):
+            if trial['task'] == 'audio_questions':
+                if trial['attention_check'] and not trial['attention_check']['passed']:
+                    warnings += 1
+                    print(
+                        f"WARNING: attention check failed in {csv_path.name} "
+                        f"participant={trial['participant_id']} item={trial['item_id']} "
+                        f"condition={trial['condition']} field={trial['attention_check']['field']} "
+                        f"value={trial['attention_check']['value']}",
+                        file=sys.stderr,
+                    )
+                trials.append(trial)
+        dataset[csv_path.name] = trials
+
+    output_path = Path(__file__).resolve().parent / 'parsed_experiment_data.json'
+    output_data = {
+        'metadata': {
+            'parsed_at': __import__('datetime').datetime.now().isoformat(),
+            'files': [str(p.resolve()) for p in csv_paths],
+        },
+        'files': dataset,
+    }
+    with open(output_path, 'w', encoding='utf-8') as outfile:
+        json.dump(output_data, outfile, indent=2, ensure_ascii=False)
+
+    total_trials = sum(len(trials) for trials in dataset.values())
+    print(f'Parsed {total_trials} audio question trials from {len(csv_paths)} file(s).')
+    if warnings:
+        print(f'Attention check warnings: {warnings}. See stderr output for details.')
+    else:
+        print('No attention check failures were detected.')
+    print(f'Parsed output written to {output_path}')
+
+##### Process the participant data in json files to centered scales and unify output in dataframe
+
+PARSER_OUTPUT = Path(__file__).resolve().parent / 'parsed_experiment_data.json'
+RESULTS_DIR = Path(__file__).resolve().parent / 'analysis_results'
+RESULTS_DIR.mkdir(exist_ok=True)
+
+parsed = json.loads(PARSER_OUTPUT.read_text(encoding='utf-8'))
+df = build_dataframe(parsed)
+df = center_scales(df)
+df = standardize_columns(df, [
+    'formality', 'socioeconomic', 'education', 'masculinity',
+    'friendliness', 'urban', 'occupational_prestige', 'age_scale',
+  ])
+df = compute_status_composite(df)
+
+#### Data exclusion / filtering
+
+critical = df[df['condition_type'] == 'critical'].dropna(subset=CONTINUOUS_LABELS)
+
+#### Prepare data for analysis - create columns etc.
+
+PRESTIGE_MAP = {
+    'trabaja en el campo': 1,
+    'trabaja en un bar/restaurante': 2,
+    'trabaja en la construcción': 2,
+    'trabaja en una tienda': 3,
+    'es administrador/a': 4,
+    'es maestro/a': 4,
+    'es médico/a o abogado/a': 5,
+}
+
+AGE_MAP = {
+    '< 30': 1,
+    '30-39': 2,
+    '40-49': 3,
+    '50-59': 4,
+    '≥ 60': 5,
+}
+
+ORIGIN_MAP = {
+    'Huelva': 'Huelva',
+    'Sevilla': 'Sevilla',
+    'Otro lugar': 'Otro lugar',
+    'otro lugar': 'Otro lugar',
+}
+
+GENDER_MAP = {
+    'I': 'female',
+    'Isa': 'female',
+    'L': 'female',
+    'M': 'male',
+    'R': 'male',
+    'V': 'male',
+}
+
+Q1_FIELDS = {
+    'formality': 'q1_s1',
+    'socioeconomic': 'q1_s2',
+    'education': 'q1_s3',
+    'masculinity': 'q1_s4',
+    'friendliness': 'q1_s5',
+    'urban': 'q1_s6',
+    'naturalness': 'q1_s7',
+}
+
+CONTINUOUS_LABELS = [
+    'formality',
+    'socioeconomic',
+    'education',
+    'masculinity',
+    'friendliness',
+    'urban',
+    'occupational_prestige',
+    'age_scale',
+]
+
+
+def parse_speaker_from_audio(audio: Optional[str]) -> Optional[str]:
+    if not audio:
+        return None
+    name = Path(audio).stem
+    parts = name.split('-')
+    if len(parts) >= 2:
+        return '-'.join(parts[1:])
+    return name
+
+
+def speaker_gender_from_code(code: Optional[str]) -> Optional[str]:
+    if code is None:
+        return None
+    return GENDER_MAP.get(code)
+
+
+def build_dataframe(parsed_json: Dict) -> pd.DataFrame:
+    records: List[Dict] = []
+    for source_file, trials in parsed_json.get('files', {}).items():
+        for trial in trials:
+            if trial.get('task') != 'audio_questions':
+                continue
+            response = trial.get('response', {}) or {}
+            if not response:
+                continue
+            row: Dict = {
+                'source_file': source_file,
+                'participant_id': trial.get('participant_id'),
+                'trial_index': trial.get('trial_index'),
+                'item_id': trial.get('item_id'),
+                'condition': trial.get('condition'),
+                'audio': trial.get('audio'),
+                'variant': trial.get('condition'),
+                'speaker': parse_speaker_from_audio(trial.get('audio')),
+            }
+            # q1 scales: handle both 7-scale (no attention check) and 8-scale (with attention check) formats
+            # When attention check is present, s4 is the check itself, so s5-s8 map to the actual dimensions
+            has_attention_check = trial.get('attention_check') is not None
+            for label, key in Q1_FIELDS.items():
+                if has_attention_check and label == 'masculinity':
+                    # When attention check present, masculinity is at s5 instead of s4
+                    value = response.get('q1_s5')
+                elif has_attention_check and label in ('friendliness', 'urban', 'naturalness'):
+                    # When attention check present, shift these fields up by one position
+                    key_num = int(key.split('_s')[1])
+                    new_key = f'q1_s{key_num + 1}'
+                    value = response.get(new_key)
+                else:
+                    # Standard case: no attention check
+                    value = response.get(key)
+                row[label] = int(value) if value not in (None, '') else np.nan
+            # derived measures
+            row['occupational_prestige'] = PRESTIGE_MAP.get(response.get('q2'))
+            row['age_scale'] = AGE_MAP.get(response.get('q3'))
+            origin = response.get('q4')
+            row['perceived_origin'] = ORIGIN_MAP.get(origin, origin)
+            row['speaker_gender'] = speaker_gender_from_code(row['speaker'])
+            row['condition_type'] = 'critical' if row['condition'] in ('ceceo', 'seseo') else 'other'
+            records.append(row)
+    df = pd.DataFrame.from_records(records)
+    # normalize condition labels for modeling convenience
+    df['variant'] = df['variant'].astype('category')
+    df['perceived_origin'] = pd.Categorical(df['perceived_origin'], categories=['Huelva', 'Sevilla', 'Otro lugar'])
+    return df
+
+
+def center_scales(df: pd.DataFrame) -> pd.DataFrame:
+    out = df.copy()
+    for label in ['formality', 'socioeconomic', 'education', 'masculinity', 'friendliness', 'urban', 'naturalness']:
+        if label in out:
+            out[f'{label}_c'] = out[label] - 3.5
+    for label in ['occupational_prestige', 'age_scale']:
+        if label in out:
+            out[f'{label}_c'] = out[label] - 3.0
+    return out
+
+
+def standardize_columns(df: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
+    scaler = StandardScaler()
+    scaled = scaler.fit_transform(df[columns].astype(float))
+    scaled_df = pd.DataFrame(scaled, columns=[f'{col}_z' for col in columns], index=df.index)
+    return pd.concat([df, scaled_df], axis=1)
+
+
+
+```
+
+### Confirmatory analysis
+
+First, a Principal Component Analysis (PCA) was applied in all continuous variables of the data except for naturalness, since it was not present in the original study and it was only included to control for the perception of the recordings. The PCA was followed by a factor analysis.
+
+```{python}
+
+def pca_summary(df: pd.DataFrame, columns: List[str], n_components: int = None):
+    if n_components is None:
+        n_components = len(columns)
+    scaler = StandardScaler()
+    X = scaler.fit_transform(df[columns].astype(float).dropna())
+    pca = PCA(n_components=n_components)
+    pca.fit(X)
+    result = pd.DataFrame(
+        np.column_stack((pca.explained_variance_, pca.explained_variance_ratio_)),
+        columns=['eigenvalue', 'explained_variance_ratio'],
+        index=[f'PC{i+1}' for i in range(pca.n_components_)]
+    )
+    result['cumulative_variance_ratio'] = result['explained_variance_ratio'].cumsum()
+    loadings = pd.DataFrame(
+        pca.components_.T,
+        index=columns,
+        columns=[f'PC{i+1}' for i in range(pca.n_components_)]
+    )
+    return result, pca, loadings
+
+def factor_analysis(df: pd.DataFrame, columns: List[str], n_factors: int = 3) -> Dict:
+    X = StandardScaler().fit_transform(df[columns].astype(float).dropna())
+    fa = FactorAnalyzer(n_factors=n_factors, rotation='varimax')
+    fa.fit(X)
+    loadings = pd.DataFrame(fa.loadings_, index=columns, columns=[f'Factor{i+1}' for i in range(n_factors)])
+    communalities = pd.Series(fa.get_communalities(), index=columns)
+    return {
+        'model': fa,
+        'loadings': loadings,
+        'communalities': communalities,
+        'eigenvalues': pd.Series(fa.get_eigenvalues()[0], index=columns),
+    }
+
+```
+
+The results of the PCA and factor analysis were similar to those of Regan(2021): 40% of the variance could be explained with the first component alone, where the measures of socioeconomic status, occupational prestige, education, urbanness and formality had the highest values. Following the original study, subsequent analyses examined the interaction of the variant of interest with these aspects exploring three measures: urbanness, status (formed by a composite of socioeconomic level, education level and occupational prestige) and formality. These were the dependent measures of the subsequent analyses.
+
+A separate mixed effects linear regression model was created for each of these dependent measures. The model had  two random intercepts of speaker and listener as well as a random slope of variant by listener. Independent variables were: variant (_ceceo_ and _seseo_), speaker gender (female, male) and interaction between variant and speaker gender.
+
+```{python}
+def fit_mixedlm(df: pd.DataFrame, outcome: str, formula: str, group_col: str, vc: Dict[str, str]):
+    df = df.copy()
+    try:
+        model = smf.mixedlm(formula, df, groups=df[group_col], vc_formula=vc, re_formula='1 + variant_code')
+        result = model.fit(reml=False, method='lbfgs')
+        return result
+    except (np.linalg.LinAlgError, ValueError) as first_error:
+        try:
+            model = smf.mixedlm(formula, df, groups=df[group_col], vc_formula=vc, re_formula='1')
+            result = model.fit(reml=False, method='lbfgs')
+            return result
+        except (np.linalg.LinAlgError, ValueError):
+            ols_result = smf.ols(formula, df).fit()
+            return ols_result
+```
+
+The models for urbanness and status showed a significant main effect for variant (_ceceo_ vs. _seseo_) (p > .001), where _seseo_ guises were associated with more urbanness and status. However, no significant main effect for variant was found in formality. No model found an significant effect in the interaction of variant and speaker gender, although status found a significant effect of speaker gender without interaction (p > .05), where male voices were associated with an increase in status. Figures 2-4 show the results of the interaction in the original study, while Figure 5 shows the results of the interaction in the current study.
+
+::: {layout-ncol=3}
+![Figure 2: Perception of formality based on variant mediated by speaker gender, Regan (2021)](analysis/analysis_results/original-formality.png)
+
+![Figure 3: Perception of urbanness based on variant mediated by speaker gender, Regan (2021)](analysis/analysis_results/original-urban.png)
+`
+![Figure 4: Perception of status based on variant mediated by speaker gender, Regan (2021)](analysis/analysis_results/original-status.png)
+:::
+
+![Figure 5: Interaction of speaker gender and variant on formality, urbanness, and status, current study](analysis/analysis_results/gender_variant_formality_urban_status_boxplots.png)
+
+## Discussion
+
+### Summary of Replication Attempt
+
+The results indicated that _seseo_ guises were associated with more urbanness and status than _ceceo_ guises, but not with a significant effect in formality. Moreover, speaker gender did not mediate the relationship between variant and the dependent measures. Therefore, the results only partially replicated those of Regan (2021), who found that _distinción_ was a significant predictor of increase in formality, urbanness, and status. Moreover, the original study also found that speaker gender interacted with the variant to influence formality, urbanness and status. Thus, there was no replication of the original findings in interaction of speaker gender and the dependent measures. 
+
+### Commentary
+
+There are three potential causes to the differences in the results of the current study and those of Regan (2021): i) differences in experimental design, ii) differences in the linguistic features of the variants, and iii) differences in number of participants. Regarding the differences in the experimental design, the original study recruited participants from specific areas of Western Andalusia where _ceceo_ is prevalent, while the current study recruited participants from all over Spain. Therefore, it is possible that the participants in the current study were not as attuned to specific dialectal features from Western Andalusian Spanish, which may have affected their social evaluations of the speakers. Regarding ii), the original study included a _distinción_ guise, while the current study included a _seseo_ guise. Therefore, the partial replication may indicate that the indexical field of _distinción_ and _seseo_ display some overlap in their social associations regarding urbanness and status, but not regarding formality. 
+
+Finally, regarding iii), the current study had a smaller sample size than the original study. A power analysis indicated that the current study may have been underpowered to detect significant effects (see Figure 1). Formality was the dependent measure most underpowered based on the power analysis, which may explain the lack of significant effects. Future research could explore these differences further by recruiting a larger sample of participants from specific regions and including both _distinción_ and _seseo_ guises in the same study.

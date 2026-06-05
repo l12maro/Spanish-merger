@@ -1,0 +1,20 @@
+                      Mixed Linear Model Regression Results
+==================================================================================
+Model:                    MixedLM         Dependent Variable:         status_score
+No. Observations:         300             Method:                     ML          
+No. Groups:               50              Scale:                      0.2375      
+Min. group size:          6               Log-Likelihood:             -362.4496   
+Max. group size:          6               Converged:                  Yes         
+Mean group size:          6.0                                                     
+----------------------------------------------------------------------------------
+                                        Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+----------------------------------------------------------------------------------
+Intercept                               -0.514    0.119 -4.341 0.000 -0.747 -0.282
+variant[T.seseo]                         0.460    0.136  3.381 0.001  0.194  0.727
+speaker_gender[T.male]                   0.289    0.121  2.382 0.017  0.051  0.527
+variant[T.seseo]:speaker_gender[T.male] -0.323    0.170 -1.898 0.058 -0.656  0.010
+Group Var                                0.360                                    
+Group x variant_code[T.1] Cov           -0.213                                    
+variant_code[T.1] Var                    0.240                                    
+speaker Var                              0.252                                    
+==================================================================================

@@ -1,0 +1,24 @@
+                          MNLogit Regression Results                          
+==============================================================================
+Dep. Variable:                      y   No. Observations:                  600
+Model:                        MNLogit   Df Residuals:                      594
+Method:                           MLE   Df Model:                            4
+Date:                Fri, 05 Jun 2026   Pseudo R-squ.:                 0.09889
+Time:                        15:19:50   Log-Likelihood:                -558.06
+converged:                       True   LL-Null:                       -619.30
+Covariance Type:            nonrobust   LLR p-value:                 1.568e-25
+=======================================================================================
+                y=1       coef    std err          z      P>|z|      [0.025      0.975]
+---------------------------------------------------------------------------------------
+variant_code            0.0368        nan        nan        nan         nan         nan
+variant_control        -0.3036        nan        nan        nan         nan         nan
+variant_seseo           0.6440        nan        nan        nan         nan         nan
+speaker_gender_male     0.2361      0.201      1.173      0.241      -0.158       0.631
+---------------------------------------------------------------------------------------
+                y=2       coef    std err          z      P>|z|      [0.025      0.975]
+---------------------------------------------------------------------------------------
+variant_code            0.8585        nan        nan        nan         nan         nan
+variant_control        -0.0043        nan        nan        nan         nan         nan
+variant_seseo           0.8670        nan        nan        nan         nan         nan
+speaker_gender_male    -0.7570      0.202     -3.756      0.000      -1.152      -0.362
+=======================================================================================

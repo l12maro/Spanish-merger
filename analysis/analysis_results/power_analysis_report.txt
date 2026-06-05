@@ -1,0 +1,98 @@
+==========================================================================================
+POWER ANALYSIS FOR SPANISH MERGER MATCHED-GUISE EXPERIMENT
+==========================================================================================
+
+Current Study Design: N = 50 participants
+Design: Repeated measures mixed effects model
+  - Random intercepts: participant + speaker
+  - Random slopes: variant by participant
+  - Fixed effects: variant × speaker_gender interaction
+
+
+------------------------------------------------------------------------------------------
+POWER SUMMARY
+------------------------------------------------------------------------------------------
+Effect                              Cohen's d    Effect Size  Power @ N=50   
+------------------------------------------------------------------------------------------
+formality_z_variant                      0.269  small               15.6%
+formality_z_gender                       0.239  small               13.3%
+urban_z_variant                          0.576  medium              52.2%
+urban_z_gender                          -0.028  negligible           5.1%
+status_score_variant                     0.345  small               22.7%
+status_score_gender                      0.057  negligible           5.5%
+
+------------------------------------------------------------------------------------------
+DETAILED RESULTS
+------------------------------------------------------------------------------------------
+
+formality_z_variant:
+  Cohen's d: 0.269 (small effect)
+  Current power (N=50): 15.6%
+  Sample size needed for 80% power: 436 per group
+  Sample size needed for 90% power: 583 per group
+  ✗ Study is UNDERPOWERED; high risk of Type II error
+
+formality_z_gender:
+  Cohen's d: 0.239 (small effect)
+  Current power (N=50): 13.3%
+  Sample size needed for 80% power: 551 per group
+  Sample size needed for 90% power: 737 per group
+  ✗ Study is UNDERPOWERED; high risk of Type II error
+
+urban_z_variant:
+  Cohen's d: 0.576 (medium effect)
+  Current power (N=50): 52.2%
+  Sample size needed for 80% power: 96 per group
+  Sample size needed for 90% power: 128 per group
+  ✗ Study is UNDERPOWERED; high risk of Type II error
+
+urban_z_gender:
+  Cohen's d: -0.028 (negligible effect)
+  Current power (N=50): 5.1%
+  Sample size needed for 80% power: None per group
+  Sample size needed for 90% power: None per group
+  ✗ Study is UNDERPOWERED; high risk of Type II error
+
+status_score_variant:
+  Cohen's d: 0.345 (small effect)
+  Current power (N=50): 22.7%
+  Sample size needed for 80% power: 265 per group
+  Sample size needed for 90% power: 354 per group
+  ✗ Study is UNDERPOWERED; high risk of Type II error
+
+status_score_gender:
+  Cohen's d: 0.057 (negligible effect)
+  Current power (N=50): 5.5%
+  Sample size needed for 80% power: None per group
+  Sample size needed for 90% power: None per group
+  ✗ Study is UNDERPOWERED; high risk of Type II error
+
+==========================================================================================
+OVERALL ASSESSMENT
+==========================================================================================
+
+0 of 6 effects have ≥80% power at N=50
+
+------------------------------------------------------------------------------------------
+RECOMMENDATIONS
+------------------------------------------------------------------------------------------
+
+✗ 6 effect(s) are underpowered (< 80%):
+
+  • formality_z_variant: Currently 15.6% power, need N≈436 for 80% power
+  • formality_z_gender: Currently 13.3% power, need N≈551 for 80% power
+  • urban_z_variant: Currently 52.2% power, need N≈96 for 80% power
+  • urban_z_gender: Currently 5.1% power, need N≈None for 80% power
+  • status_score_variant: Currently 22.7% power, need N≈265 for 80% power
+  • status_score_gender: Currently 5.5% power, need N≈None for 80% power
+
+  → Consider increasing to N≈337 participants for adequate power across all effects
+
+Note: This analysis is approximate and based on independent samples t-tests.
+Actual power in your mixed effects model may differ due to:
+  - Repeated measures structure
+  - Intraclass correlations (ICC) between observations
+  - Random effects components
+  - Design imbalance
+
+==========================================================================================
