@@ -1,7 +1,7 @@
 ---
 title: "Replication of Study 'The social meaning of a merger: The evaluation of an Andalusian Spanish consonant merger (ceceo)' by Regan (2022, Language in Society)"
 author: "Lorena Martin Rodriguez (lmaro@stanford.edu)"
-date: "`r format(Sys.time(), '%B %d, %Y')`"
+date: "r format(Sys.time(), '%B %d, %Y')"
 format:
   html:
     toc: true
@@ -58,7 +58,7 @@ Speakers will be asked for perceived origin regarding region (i.e. Huelva, Sevil
 
 ### Methods Addendum (Post Data Collection)
 
-Due to the difference in participant size and demographics, variables regarding listeners were disregarded. Instead, this experiment focused on the variables regarding speaker voices, namely the interaction of the condition listeners heard (whether _ceceo_ or _seseo_), and their social evaluations. 
+Due to the difference in participant size and demographics, variables regarding listeners were disregarded. Instead, this experiment focused on the variables regarding speaker voices, namely the interaction of the condition listeners heard (whether _ceceo_ or _seseo_), and their social evaluations. The variable regarding perceived origin was also disregarded, since an examination of the open responses of the participants revealed that many of them were not familiar with the accents spoken in the recordings, and thus they were not able to provide an accurate answer to the question of perceived origin.
 
 #### Actual Sample
 
@@ -78,11 +78,13 @@ The methods for the statistical analysis used the same kinds of models as the or
 
 The responses of the participants were parsed into a json file organized by participant. The json file automatically parsed the responses for attention checks. Passing the attention checks was a requirement for the participation in the study.
 
-Based on the content of the json file, responses were converted. Professions and age were mapped into a 5-point scale; gender of speakers was mapped into a binary for masculine and feminine, and responses of the 6-point Likert-scale were centered to match the 5-point scales of occupation and age. All variables were stored into a dataframe with the following columns: 'source_file', 'participant_id', 'trial_index': trial.get('trial_index'), 'item_id': trial.get('item_id'), 'condition', 'audio', 'variant', 'speaker', 'occupational_prestige', 'age_scale', 'perceived_origin', 'speaker_gender', 'condition_type'
+Based on the content of the json file, responses were converted. Professions and age were mapped into a 5-point scale; gender of speakers was mapped into a binary for masculine and feminine, and responses of the 6-point Likert-scale were centered to match the 5-point scales of occupation and age. All variables were stored into a dataframe with the following columns: 'source_file', 'participant_id', 'trial_index', 'item_id', 'condition', 'audio', 'variant', 'speaker', 'occupational_prestige', 'age_scale', 'perceived_origin', 'speaker_gender', 'condition_type'
 
-The Python code used to prepare the data is included below. AI (ChatGPT) was used to assist with the coding, with manual revisions of the code and its output to ensure its accuracy.
+The Python code used to prepare the data is included below. AI (Claude Haiku 4.5) was used to assist with the coding, with manual revisions of the code and its output to ensure its accuracy.
 
 ```{python}
+#| eval: false
+
 ### Data Preparation
 
 #### Load Relevant Libraries and Functions
@@ -283,6 +285,11 @@ def main():
         print('No attention check failures were detected.')
     print(f'Parsed output written to {output_path}')
 
+```
+
+```{python}
+#| eval: false
+
 ##### Process the participant data in json files to centered scales and unify output in dataframe
 
 PARSER_OUTPUT = Path(__file__).resolve().parent / 'parsed_experiment_data.json'
@@ -442,9 +449,6 @@ def standardize_columns(df: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
     scaled = scaler.fit_transform(df[columns].astype(float))
     scaled_df = pd.DataFrame(scaled, columns=[f'{col}_z' for col in columns], index=df.index)
     return pd.concat([df, scaled_df], axis=1)
-
-
-
 ```
 
 ### Confirmatory analysis
@@ -452,6 +456,7 @@ def standardize_columns(df: pd.DataFrame, columns: List[str]) -> pd.DataFrame:
 First, a Principal Component Analysis (PCA) was applied in all continuous variables of the data except for naturalness, since it was not present in the original study and it was only included to control for the perception of the recordings. The PCA was followed by a factor analysis.
 
 ```{python}
+#| eval: false
 
 def pca_summary(df: pd.DataFrame, columns: List[str], n_components: int = None):
     if n_components is None:
@@ -493,6 +498,8 @@ The results of the PCA and factor analysis were similar to those of Regan(2021):
 A separate mixed effects linear regression model was created for each of these dependent measures. The model had  two random intercepts of speaker and listener as well as a random slope of variant by listener. Independent variables were: variant (_ceceo_ and _seseo_), speaker gender (female, male) and interaction between variant and speaker gender.
 
 ```{python}
+#| eval: false
+
 def fit_mixedlm(df: pd.DataFrame, outcome: str, formula: str, group_col: str, vc: Dict[str, str]):
     df = df.copy()
     try:
@@ -512,11 +519,11 @@ def fit_mixedlm(df: pd.DataFrame, outcome: str, formula: str, group_col: str, vc
 The models for urbanness and status showed a significant main effect for variant (_ceceo_ vs. _seseo_) (p > .001), where _seseo_ guises were associated with more urbanness and status. However, no significant main effect for variant was found in formality. No model found an significant effect in the interaction of variant and speaker gender, although status found a significant effect of speaker gender without interaction (p > .05), where male voices were associated with an increase in status. Figures 2-4 show the results of the interaction in the original study, while Figure 5 shows the results of the interaction in the current study.
 
 ::: {layout-ncol=3}
-![Figure 2: Perception of formality based on variant mediated by speaker gender, Regan (2021)](analysis/analysis_results/original-formality.png)
+![Figure 2: Perception of formality based on variant mediated by speaker gender, Regan (2021)](analysis/analysis_results/original-status.png)
 
 ![Figure 3: Perception of urbanness based on variant mediated by speaker gender, Regan (2021)](analysis/analysis_results/original-urban.png)
-`
-![Figure 4: Perception of status based on variant mediated by speaker gender, Regan (2021)](analysis/analysis_results/original-status.png)
+
+![Figure 4: Perception of status based on variant mediated by speaker gender, Regan (2021)](analysis/analysis_results/original-formality.png)
 :::
 
 ![Figure 5: Interaction of speaker gender and variant on formality, urbanness, and status, current study](analysis/analysis_results/gender_variant_formality_urban_status_boxplots.png)
@@ -532,3 +539,5 @@ The results indicated that _seseo_ guises were associated with more urbanness an
 There are three potential causes to the differences in the results of the current study and those of Regan (2021): i) differences in experimental design, ii) differences in the linguistic features of the variants, and iii) differences in number of participants. Regarding the differences in the experimental design, the original study recruited participants from specific areas of Western Andalusia where _ceceo_ is prevalent, while the current study recruited participants from all over Spain. Therefore, it is possible that the participants in the current study were not as attuned to specific dialectal features from Western Andalusian Spanish, which may have affected their social evaluations of the speakers. Regarding ii), the original study included a _distinción_ guise, while the current study included a _seseo_ guise. Therefore, the partial replication may indicate that the indexical field of _distinción_ and _seseo_ display some overlap in their social associations regarding urbanness and status, but not regarding formality. 
 
 Finally, regarding iii), the current study had a smaller sample size than the original study. A power analysis indicated that the current study may have been underpowered to detect significant effects (see Figure 1). Formality was the dependent measure most underpowered based on the power analysis, which may explain the lack of significant effects. Future research could explore these differences further by recruiting a larger sample of participants from specific regions and including both _distinción_ and _seseo_ guises in the same study.
+
+However, the partial replication indicates promising results of this experiment, in that _ceceo_ and _seseo_ seem to differ in how Spanish speakers perceive them. More concretely, the similar results of _seseo_ with _distinción_ in terms of urbanness and status indicate that these variants may exist in a continuum, where _ceceo_ is less urban and lower status than the other variables. A further study that includes _distinción_ and _ceceo_ could ellucidate more on whether this is the case, and which spaces those two variables occupy in the continuum.

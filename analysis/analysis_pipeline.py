@@ -230,14 +230,25 @@ def _formula_predictor_names(predictors: str) -> List[str]:
 def fit_multinomial_origin(df: pd.DataFrame, predictors: str):
     df2 = df.dropna(subset=['perceived_origin']).copy()
     df2 = df2[df2['perceived_origin'].isin(['Huelva', 'Sevilla', 'Otro lugar'])].copy()
+    df2 = df2[df2['variant'].isin(['ceceo', 'seseo'])].copy()
     df2['perceived_origin'] = df2['perceived_origin'].astype('category')
+    df2['variant'] = df2['variant'].astype('category').cat.remove_unused_categories()
+    df2['speaker_gender'] = df2['speaker_gender'].astype('category').cat.remove_unused_categories()
     df2 = pd.get_dummies(df2, columns=['variant', 'speaker_gender'], drop_first=True)
     target = df2['perceived_origin'].cat.codes.astype(int)
     exog_cols = [c for c in df2.columns if c.startswith('variant_') or c.startswith('speaker_gender_')]
     exog = df2[exog_cols].astype(float)
     exog = exog.loc[:, exog.std(axis=0) > 0.0]
+    if exog.empty:
+        raise ValueError('No usable predictor columns for multinomial origin model.')
     model = sm.MNLogit(target, exog)
-    result = model.fit(method='newton', maxiter=100, disp=False)
+    try:
+        result = model.fit(method='newton', maxiter=100, disp=False)
+    except (np.linalg.LinAlgError, ValueError) as err:
+        if 'Singular matrix' in str(err) or 'singular matrix' in str(err).lower():
+            result = model.fit_regularized(alpha=0.0, maxiter=1000)
+        else:
+            raise
     return result
 
 
@@ -328,13 +339,20 @@ def main() -> None:
 
     print('\nMultinomial logistic regression for perceived origin:')
     origin_df = df.dropna(subset=['perceived_origin', 'variant', 'speaker_gender'])
+    origin_df = origin_df[origin_df['condition_type'] == 'critical']
     try:
         origin_df = origin_df[origin_df['perceived_origin'].isin(['Huelva', 'Sevilla', 'Otro lugar'])]
-        origin_df['variant_code'] = origin_df['variant'].map({'ceceo': 0, 'seseo': 1, 'control': 2})
+        origin_df['variant_code'] = origin_df['variant'].map({'ceceo': 0, 'seseo': 1})
         origin_model = fit_multinomial_origin(origin_df, 'variant + speaker_gender')
-        print(origin_model.summary())
+        try:
+            origin_summary = origin_model.summary()
+            summary_text = str(origin_summary)
+        except Exception as summary_exc:
+            print(f'Origin model fit succeeded, but summary generation failed: {summary_exc}')
+            summary_text = f'Origin model fit succeeded, but summary generation failed: {summary_exc}\n\nModel parameters:\n{origin_model.params}'
+        print(summary_text)
         with open(RESULTS_DIR / 'multinomial_origin_summary.txt', 'w', encoding='utf-8') as fh:
-            fh.write(str(origin_model.summary()))
+            fh.write(summary_text)
     except Exception as exc:
         print(f'Failed to fit multinomial origin model: {exc}')
 
